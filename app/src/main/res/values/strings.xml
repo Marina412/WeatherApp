@@ -37,7 +37,7 @@
 
     <string name="Humidity">Humidity</string>
     <string name="Preciption">Precipitation</string>
-    <string name="Cloud">Cloud</string>
+    <string name="Clouds">Clouds</string>
     <string name="Pressure">Pressure</string>
     <string name="wind_speed">Wind Speed</string>
     <string name="uvi">UVI</string>

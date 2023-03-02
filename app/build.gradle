@@ -106,8 +106,11 @@ dependencies {
 
     //Lottie
     implementation "com.airbnb.android:lottie:3.4.0"
-    //gif
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+
+    //location
+    implementation "com.google.android.gms:play-services-location:17.1.0"
+    //for Kotlin + workManager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 
 
 }
