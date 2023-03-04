@@ -31,10 +31,6 @@
     <string name="hello_message" translatable="false">Hello IN SKYOURS</string>
 
 
-
-
-
-
     <string name="Humidity">Humidity</string>
     <string name="Preciption">Precipitation</string>
     <string name="Clouds">Clouds</string>
@@ -76,6 +72,6 @@
     <string name="weather_alarm">Weather Alarm</string>
     <string name="weather_desc">Weather Description</string>
     <string name="offline_mode">You are in oflfline mode now</string>
-    <string name="current_location" >Current Location</string>
+    <string name="current_location">Current Location</string>
 
 </resources>

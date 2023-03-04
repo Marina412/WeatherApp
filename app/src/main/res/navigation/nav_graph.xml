@@ -3,18 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment2">
+    app:startDestination="@id/settingsFragment2">
 
-    <fragment
-        android:id="@+id/splashFragment_nav"
-        android:name="com.example.weatherapp.Splash.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-
-        <action
-            android:id="@+id/action_splashFragment_nav_to_homeFragment2"
-            app:destination="@id/homeFragment2" />
-    </fragment>
     <fragment
         android:id="@+id/alertsFragment2"
         android:name="com.example.weatherapp.Alarts.View.AlertsFragment"
