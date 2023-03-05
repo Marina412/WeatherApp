@@ -3,22 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/settingsFragment2">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/alertsFragment2"
+        android:id="@+id/alertsFragment"
         android:name="com.example.weatherapp.Alarts.View.AlertsFragment"
         android:label="AlertsFragment" />
     <fragment
-        android:id="@+id/homeFragment2"
+        android:id="@+id/homeFragment"
         android:name="com.example.weatherapp.Home.View.HomeFragment"
         android:label="HomeFragment" />
     <fragment
-        android:id="@+id/settingsFragment2"
+        android:id="@+id/settingsFragment"
         android:name="com.example.weatherapp.Settings.View.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
-        android:id="@+id/favoriteFragment2"
+        android:id="@+id/favoriteFragment"
         android:name="com.example.weatherapp.Fav.View.FavoriteFragment"
-        android:label="FavoriteFragment" />
+        android:label="FavoriteFragment" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.weatherapp.Splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.weatherapp.Fav.View.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>
