@@ -73,5 +73,6 @@
     <string name="weather_desc">Weather Description</string>
     <string name="offline_mode">You are in oflfline mode now</string>
     <string name="current_location">Current Location</string>
+    <string name="notification">Notifications</string>
 
 </resources>

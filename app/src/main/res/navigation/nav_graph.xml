@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/alertsFragment"
@@ -16,27 +16,28 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.weatherapp.Settings.View.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsMapFragment"
+            app:destination="@id/settingsMapFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.weatherapp.Fav.View.FavoriteFragment"
         android:label="FavoriteFragment" >
         <action
-            android:id="@+id/action_favoriteFragment_to_mapFragment"
+            android:id="@+id/action_favoriteFragment_to_mapFragment2"
             app:destination="@id/mapFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.example.weatherapp.Splash.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.weatherapp.Fav.View.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/settingsMapFragment"
+        android:name="com.example.weatherapp.Settings.View.SettingsMapFragment"
+        android:label="fragment_settings_map"
+        tools:layout="@layout/fragment_settings_map" />
 </navigation>
