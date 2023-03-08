@@ -19,25 +19,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-   // lateinit var binding: ActivityMainBinding
+   lateinit var binding: ActivityMainBinding
         override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       setContentView(R.layout.activity_main)
+       //setContentView(R.layout.activity_main)
       // val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-//            binding = ActivityMainBinding.inflate(layoutInflater)
-//            setContentView(binding.root)
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-            val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+            val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
             val navController: NavController? = findNavController()
 
        navController?.let {
            NavigationUI.setupWithNavController( bottomNavigationView,it)
 
        }
-
-Toast.makeText(this,"bbbbbb",Toast.LENGTH_SHORT).show()
-
 //       val customDialog=CustomDialog(this).customLocationDialog()//.showOptionDialog()
 //        customDialog.show()
       /* navgation(HomeFragment())
@@ -58,11 +55,11 @@ Toast.makeText(this,"bbbbbb",Toast.LENGTH_SHORT).show()
         return navHostFragment?.navController
     }
 
-    fun navgation(fragment: Fragment){
+   /* fun navgation(fragment: Fragment){
         val fragmentManger=supportFragmentManager
         val fragmentTransition=fragmentManger.beginTransaction()
         fragmentTransition.replace(R.id.nav_host_fragment,fragment)
         fragmentTransition.commit()
-    }
+    }*/
 
 }

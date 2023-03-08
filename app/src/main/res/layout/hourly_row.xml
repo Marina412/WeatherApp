@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@color/nav_logos"
+        app:cardElevation="30dp"
+        app:cardCornerRadius="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/hourlyTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="11:11:11 am"
+                app:layout_constraintBottom_toTopOf="@+id/wetherHourlyImagDesc"
+                app:layout_constraintEnd_toEndOf="@+id/wetherHourlyImagDesc"
+                app:layout_constraintStart_toStartOf="@+id/wetherHourlyImagDesc"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/wetherHourlyImagDesc"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/wetherHourlyDesc"
+                app:layout_constraintEnd_toEndOf="@+id/wetherHourlyDesc"
+                app:layout_constraintStart_toStartOf="@+id/wetherHourlyDesc"
+                app:layout_constraintTop_toBottomOf="@+id/hourlyTime"
+                app:srcCompat="@drawable/clear_sky" />
+
+            <TextView
+                android:id="@+id/hourlyTimelyTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@{Double.toString(hourlyWether.temp)}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/wetherHourlyDesc"
+                app:layout_constraintStart_toStartOf="@+id/wetherHourlyDesc"
+                app:layout_constraintTop_toBottomOf="@+id/wetherHourlyDesc" />
+
+            <TextView
+                android:id="@+id/wetherHourlyDesc"
+                android:layout_width="60dp"
+
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/hourlyTimelyTemp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/wetherHourlyImagDesc" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>

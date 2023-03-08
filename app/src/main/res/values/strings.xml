@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SKYOU</string>
+    <string name="app_name">SKYOURs</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
@@ -74,5 +74,15 @@
     <string name="offline_mode">You are in oflfline mode now</string>
     <string name="current_location">Current Location</string>
     <string name="notification">Notifications</string>
+
+    <string name="title_save_current_loc">Save as Current Location</string>
+    <string name="message_save_current_loc">Do you want to save this location as current location?</string>
+
+
+    <string name="title_save_fav_loc">Save as Favorite Location</string>
+    <string name="message_save_fav_loc">Do you want to save this location to favorite?</string>
+    <string name="message_Location_canceld">Location canceld!!</string>
+    <string name="message_Location_saved">Location saved  </string>
+
 
 </resources>

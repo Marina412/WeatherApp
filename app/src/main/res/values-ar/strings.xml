@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SKYOURs</string>
+    <string name="hello_blank_fragment">اهلا</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="settings">الاعدادات</string>
+    <string name="favorite">المفضلة</string>
+    <string name="alerts">المنبهات</string>
+
+
+    <string name="ok">نعم</string>
+    <string name="LocationMode">وضع الموقع</string>
+    <string name="Language">اللغة</string>
+    <string name="English">إنجليزي</string>
+    <string name="Arabic">عربي</string>
+    <string name="TemperatureUnit">وحدة درجة الحرارة </string>
+    <string name="Kelvin">كلفن (K°)</string>
+    <string name="Kelvin2">°k</string>
+    <string name="Celsius">سلسيوس (C°)</string>
+    <string name="Celsius2">°c</string>
+    <string name="Fahrenheit">فهرنهايت (F°)</string>
+    <string name="Fahrenheit2">°F</string>
+    <string name="windSpeed">وحدة سرعة الرياح</string>
+    <string name="meterSec">متر/ثانية</string>
+    <string name="milesHour">ميل/ساعة</string>
+    <string name="GPS">تحديده تلقائيا</string>
+    <string name="Map">الخريطة</string>
+    <string name="Humidity">الرطوبة</string>
+    <string name="Preciption">الأمطار</string>
+    <string name="Clouds">السحب</string>
+    <string name="Pressure">الضغط</string>
+    <string name="wind_speed">سرعة الرياح</string>
+    <string name="uvi">الأشعة فوق البنفسجية</string>
+    <string name="Hourly">توقعات كل ساعة</string>
+    <string name="DailyForecast">التوقعات اليومية</string>
+    <string name="visibility">الرؤية</string>
+    <string name="favourit_screen">المواقع المفضلة لديك</string>
+    <string name="StartDate">تاريخ البدء</string>
+    <string name="EndDate">تاريخ الانتهاء</string>
+    <string name="ChooseLocation">اختر الموقع</string>
+    <string name="Save">حفظ</string>
+    <string name="title_activity_my_map">الخريطة</string>
+    <string name="addFav">اضافة للمفضلة</string>
+    <string name="Search">بحث</string>
+
+
+    <string name="add_alarm">اضافة منبه</string>
+
+
+    <string name="title_activity_mpactivity">الخريطة</string>
+    <string name="go_to_location_settings_dialog_title">اذن لفتح اعدادات الموقع</string>
+    <string name="go_to_location_settings_dialog_msg">الرجاءالسماح بالذهاب إلى الإعدادات وفتح الموقع</string>
+    <string name="Details">التفاصيل</string>
+    <string name="Hours48">48 ساعة</string>
+    <string name="wind_deg">درجة الرياح</string>
+    <string name="alert_screen_title">منبهاتك</string>
+    <string name="delete_confirm">مسح هذا الموقع؟</string>
+    <string name="delete_confirm_alert">ألغاء المنبه؟</string>
+    <string name="alertDialogTitle">الموقع</string>
+    <string name="selectedLocation">الموقع</string>
+    <string name="time">الوقت</string>
+    <string name="exampleDate">7/7/2025</string>
+    <string name="exampleTime">09:30</string>
+    <string name="submit">موافق</string>
+    <string name="cancel">ألغاء</string>
+    <string name="weather_alarm">Weather Alarm</string>
+    <string name="weather_desc">Weather Description</string>
+    <string name="offline_mode">بدون انترنت</string>
+    <string name="current_location">الموقع الحالى</string>
+    <string name="notification">اشعارات</string>
+
+
+
+    <string name="title_save_current_loc">حفظ كموقع حالى </string>
+    <string name="message_save_current_loc">هل تريد حفظ هذا الموقع كموقعك الحالى؟</string>
+
+
+    <string name="title_save_fav_loc">حفظ كموقع فى المفضلة</string>
+    <string name="message_save_fav_loc">هل تريد حفظ هذا الموقع فى المواقع المفضلة؟</string>
+
+    <string name="message_Location_canceld"> تم الغاء حفظ هذا الموقع!!</string>
+
+    <string name="message_Location_saved">تم حفظ الموقع </string>
+
+</resources>
