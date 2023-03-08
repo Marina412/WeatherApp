@@ -75,10 +75,16 @@ class HomeFragment : Fragment() {
         if(arguments!=null)
         {
             mapModel = arguments?.getSerializable("favMapModel") as  MapModel
+            viewModel.getAllWeatherStander(mapModel.latitude,mapModel.longitude)
             Log.i("ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp", "onCreateView: ${mapModel}")
         }
+        else {
 
-        Log.i("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "onCreateView: ${mapModel.adminArea}  ${mapModel.countryName} ")
+            viewModel.getAllWeatherStander(
+                sharedPreferences.getString("latitude", "")!!.toDouble(),
+                sharedPreferences.getString("longitude", "")!!.toDouble()
+            )
+        }
 
 
         lifecycleScope.launchWhenCreated {
@@ -92,7 +98,10 @@ class HomeFragment : Fragment() {
                         successHourlyData(it.data.hourly,it.data.timezone,tempUnit)
                         successCurrentData(it.data.current)
 
-                       viewModel.insertLastResponse(RoomWeatherModel(wether = it.data))
+                        binding.homeCurrentLocLabel.text=it.data.lat.toString()+"  "+it.data.lon.toString()+it.data.timezone
+                        binding.locationLabel.text=UtilsFunction.getFullAddress(it.data.lat,it.data.lon,requireContext())
+
+                       //viewModel.insertLastResponse(RoomWeatherModel(wether = it.data))
 
                     }
                     is ApiStateWeather.Failure -> {

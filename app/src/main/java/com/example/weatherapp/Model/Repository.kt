@@ -42,11 +42,18 @@ class Repository private constructor(var localSource : LocalSource,
 
     override fun getAllResponseFromAPI(lat: Double, lon: Double, exclude: String): Flow<Root> = flow {
 
+//        emit(
+//            remotSource.getWeatherDataCurrentStander(
+//            latitude=33.44,
+//            longitude =-94.04,
+//            exclude="minutely"))
+
+
         emit(
             remotSource.getWeatherDataCurrentStander(
-            latitude=33.44,
-            longitude =-94.04,
-            exclude="minutely"))
+                latitude=lat,
+                longitude =lon,
+                exclude="minutely"))
 
 
     }

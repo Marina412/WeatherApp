@@ -31,7 +31,7 @@
                     android:layout_marginTop="60dp"
                     android:text="Current Location"
                     android:drawableLeft="@drawable/baseline_location_on_24"
-                    android:textSize="40sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
