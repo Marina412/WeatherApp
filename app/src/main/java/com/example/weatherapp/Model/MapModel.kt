@@ -3,6 +3,7 @@ package com.example.weatherapp.Model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "weatherFavorite")
 data class MapModel(
@@ -16,4 +17,4 @@ data class MapModel(
     @ColumnInfo(name = "latitude")
     var latitude:Double,
     @ColumnInfo(name = "longitude")
-    var longitude:Double)
+    var longitude:Double): Serializable

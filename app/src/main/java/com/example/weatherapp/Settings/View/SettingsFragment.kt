@@ -169,9 +169,7 @@ private var strLocation:String=""
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
         }
-
 
         binding.rdBtnGroupLocationMode.setOnCheckedChangeListener{
                 _, checkedId ->

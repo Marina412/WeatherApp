@@ -61,11 +61,11 @@
     <string name="time">الوقت</string>
     <string name="exampleDate">7/7/2025</string>
     <string name="exampleTime">09:30</string>
-    <string name="submit">موافق</string>
+
     <string name="cancel">ألغاء</string>
     <string name="weather_alarm">Weather Alarm</string>
     <string name="weather_desc">Weather Description</string>
-    <string name="offline_mode">بدون انترنت</string>
+    <string name="offline_mode">انت الان غير متصل بالانترنت !!</string>
     <string name="current_location">الموقع الحالى</string>
     <string name="notification">اشعارات</string>
 

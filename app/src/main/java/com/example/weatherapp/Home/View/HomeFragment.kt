@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.Home.ViewModel.HomeViewModel
 import com.example.weatherapp.Home.ViewModel.HomeViewModelFactory
 import com.example.weatherapp.LocalDatabase.ConcreteLocalSource
+import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.Model.Repository
 import com.example.weatherapp.Model.RoomWeatherModel
 import com.example.weatherapp.Networking.APIClient
@@ -40,6 +41,8 @@ class HomeFragment : Fragment() {
 
     lateinit var tempUnit:String
     lateinit var windSpeedUnit:String
+
+    var mapModel=MapModel("test","map","model",0.0,0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,19 +72,25 @@ class HomeFragment : Fragment() {
         hViewModelFactory = HomeViewModelFactory(repository)
         viewModel =ViewModelProvider(this, hViewModelFactory).get(HomeViewModel::class.java)
 
+        if(arguments!=null)
+        {
+            mapModel = arguments?.getSerializable("favMapModel") as  MapModel
+            Log.i("ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp", "onCreateView: ${mapModel}")
+        }
+
+        Log.i("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "onCreateView: ${mapModel.adminArea}  ${mapModel.countryName} ")
 
 
-
-        lifecycleScope.launchWhenCreated { 
+        lifecycleScope.launchWhenCreated {
             viewModel.data.collect{
                 when(it){
                     is ApiStateWeather.Success ->{
 
                         Log.i(TAG, "onCreateView:  ${it.data.timezone}")
-                        //   successDailyData(it.data.daily.map {it.copy(temp = UtilsFunction.convertFromKelvinToFahrenheit()},it.data.timezone)
+
                         successDailyData(it.data.daily,it.data.timezone,tempUnit)
                         successHourlyData(it.data.hourly,it.data.timezone,tempUnit)
-                       successCurrentData(it.data.current)
+                        successCurrentData(it.data.current)
 
                        viewModel.insertLastResponse(RoomWeatherModel(wether = it.data))
 

@@ -29,11 +29,9 @@ private val iRepository:RepositoryInterface=repository
 
     init {
 
-        getAllWeatherStander(latitude=33.44,
-            longitude =-94.04,
-            exclude="minutely")
+        getAllWeatherStander(latitude=33.44,longitude =-94.04)
     }
-    fun getAllWeatherStander(latitude: Double, longitude: Double, exclude: String) = viewModelScope.launch {
+    fun getAllWeatherStander(latitude: Double, longitude: Double, exclude: String="minutely") = viewModelScope.launch {
 
         iRepository.getAllResponseFromAPI(latitude,longitude,exclude).catch { e ->
             _data.value = ApiStateWeather.Failure(e)

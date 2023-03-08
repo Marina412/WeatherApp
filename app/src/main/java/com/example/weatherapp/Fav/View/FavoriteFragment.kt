@@ -1,8 +1,8 @@
 package com.example.weatherapp.Fav.View
 
 
-import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.Fav.ViewModel.FavoriteViewModel
 import com.example.weatherapp.Fav.ViewModel.FavoriteViewModelFactory
+import com.example.weatherapp.Home.View.HomeFragment
 import com.example.weatherapp.LocalDatabase.ConcreteLocalSource
 import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.Model.Repository
@@ -27,8 +28,6 @@ import com.example.weatherapp.Utils.ApiStateFav
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentFavoriteBinding
-
-
 
 
 private const val TAG = "FavoriteFragment"
@@ -130,8 +129,14 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
             alertButtonResult,favorite,requireContext())
     }
 
-    override fun onFavClick(latLong: String) {
-       Toast.makeText(requireContext(),"jdnwqnnjncjdnjn",Toast.LENGTH_SHORT).show()
+    override fun onFavClick(favorite: MapModel) {
+        val bundle=Bundle()
+        bundle.putSerializable("favMapModel",favorite)
+
+        findNavController().navigate(R.id.homeFragment,bundle)
+
+
+       Toast.makeText(requireContext(),"showing weather",Toast.LENGTH_SHORT).show()
     }
 
 

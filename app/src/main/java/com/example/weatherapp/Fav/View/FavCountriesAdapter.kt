@@ -4,10 +4,14 @@ import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.Model.MapModel
+import com.example.weatherapp.R
+import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FavRowBinding
+import com.google.android.material.snackbar.Snackbar
 
 class FavCountriesAdapter (
 val favCountriesList:List<MapModel>,
@@ -34,9 +38,18 @@ val listener: FavOnClickListener
             listener.onDeleteClick(favCountrieItem)
 
         }
+
        binding.favCardView.setOnClickListener {
-            listener.onFavClick(favCountrieItem.countryName)
-        }
+           if(UtilsFunction.isOnline(holder.bindingHolder.favCardView.context))
+           {
+               listener.onFavClick(favCountrieItem)
+           }
+
+          else
+          {
+            Toast.makeText(holder.bindingHolder.favCardView.context,R.string.offline_mode,Toast.LENGTH_LONG).show()
+          }
+       }
 
 
 

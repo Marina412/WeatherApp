@@ -4,5 +4,5 @@ import com.example.weatherapp.Model.MapModel
 
 interface FavOnClickListener {
     fun onDeleteClick(favorite: MapModel)
-    fun onFavClick(latLong:String)
+    fun onFavClick(favorite: MapModel)
 }
