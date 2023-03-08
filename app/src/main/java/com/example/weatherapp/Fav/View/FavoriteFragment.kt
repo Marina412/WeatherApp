@@ -132,10 +132,7 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
     override fun onFavClick(favorite: MapModel) {
         val bundle=Bundle()
         bundle.putSerializable("favMapModel",favorite)
-
         findNavController().navigate(R.id.homeFragment,bundle)
-
-
        Toast.makeText(requireContext(),"showing weather",Toast.LENGTH_SHORT).show()
     }
 
