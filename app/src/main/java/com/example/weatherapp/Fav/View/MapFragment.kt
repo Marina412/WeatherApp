@@ -2,6 +2,8 @@ package com.example.weatherapp.Fav.View
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -63,7 +65,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         val localSource = ConcreteLocalSource(requireContext())
         val remoteSource= APIClient.getInstane()
-        repository =  Repository.getInstance(localSource,remoteSource)
+
+        val sharedPreferences = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+        repository =  Repository.getInstance(localSource,remoteSource,sharedPreferences)
 
 
 

@@ -5,6 +5,7 @@ import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.Model.RoomWeatherModel
 
 class ConcreteLocalSource(context: Context) : LocalSource {
+    //todo DAO FROM DATA CLASS TO HERE
     private val weatherDAO : WeatherDAO?
     private  val favDAO: FavDAO?
     init {

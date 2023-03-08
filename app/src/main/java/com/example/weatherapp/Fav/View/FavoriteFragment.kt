@@ -2,6 +2,7 @@ package com.example.weatherapp.Fav.View
 
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,7 +22,10 @@ import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.Model.Repository
 import com.example.weatherapp.Networking.APIClient
 import com.example.weatherapp.R
+import com.example.weatherapp.Utils.AlertButtonResult
 import com.example.weatherapp.Utils.ApiStateFav
+import com.example.weatherapp.Utils.Constants
+import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentFavoriteBinding
 
 
@@ -36,6 +40,7 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
     lateinit var fViewModelFactory: FavoriteViewModelFactory
     lateinit var repository: Repository
 
+    lateinit var alertButtonResult:AlertButtonResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +56,21 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
 
         val localSource = ConcreteLocalSource(requireContext())
         val remoteSource= APIClient.getInstane()
-        repository =  Repository.getInstance(localSource,remoteSource)
+       val sharedPreferences = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+        repository =  Repository.getInstance(localSource,remoteSource,sharedPreferences)
+
         fViewModelFactory = FavoriteViewModelFactory(repository)
         viewModel = ViewModelProvider(this, fViewModelFactory).get(FavoriteViewModel::class.java)
 
+
+
+        alertButtonResult= object : AlertButtonResult {
+            override fun IfOk(favModel: MapModel) {
+                viewModel.deleteFromFav(favModel )
+            }
+
+        }
 
 
 
@@ -109,33 +125,13 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
 
 
     override fun onDeleteClick(favorite: MapModel) {
-      showDialog(favorite)
+        UtilsFunction.showDialog(getString(R.string.title_delete_fav_loc),
+            getString(R.string.message_delete_fav_loc),
+            alertButtonResult,favorite,requireContext())
     }
 
     override fun onFavClick(latLong: String) {
        Toast.makeText(requireContext(),"jdnwqnnjncjdnjn",Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showDialog(favorite: MapModel) {
-        val alertBuild: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        alertBuild.setTitle("Delete from  Favorite")
-        alertBuild.setMessage("DO you want to delete this location from favorite?")
-        alertBuild.setPositiveButton("OK") {
-                _, _ ->
-
-            Toast.makeText(requireContext(), "Location $favorite delete to fav", Toast.LENGTH_SHORT).show()
-
-            viewModel.deleteFromFav(favorite )
-        }
-
-        alertBuild.setNegativeButton("Cancel!") { _, _ ->
-            Toast.makeText(requireContext(),"Delete Location canceld",Toast.LENGTH_SHORT).show()
-        }
-
-        val alert = alertBuild.create()
-        alert.show()
-
-
     }
 
 

@@ -31,8 +31,9 @@ import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.databinding.FragmentFavoriteBinding
 import com.example.weatherapp.databinding.FragmentSettingsBinding
 import com.google.android.gms.location.*
+import java.util.*
 
-
+///////todo shard init
 class SettingsFragment : Fragment() {
 lateinit var binding: FragmentSettingsBinding
 
@@ -40,7 +41,7 @@ lateinit var sharedPreference:SharedPreferences
 lateinit var editor: SharedPreferences.Editor
 
 
-    lateinit var mFusedLocationClient: FusedLocationProviderClient
+lateinit var mFusedLocationClient: FusedLocationProviderClient
 
 private var strLanguage:String=""
 private var strTempUnit:String=""
@@ -61,8 +62,6 @@ private var strLocation:String=""
          binding=FragmentSettingsBinding.inflate(inflater,container,false)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-
-
         return binding.root
 
     }
@@ -70,9 +69,19 @@ private var strLocation:String=""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedPreference = requireActivity().getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        sharedPreference = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
         editor=sharedPreference.edit()
-
+//////////////////////////////////////////////////////////
+        if(Locale.getDefault().getDisplayLanguage() == "العربية"){
+            binding.rdBtnArabic.isChecked=true
+            strLanguage=Constants.ARABIC
+        }else{
+            binding.rdBtnEnglish.isChecked=true
+            strLanguage=Constants.ENGLISH
+        }
+        
+        
+//////////////////////////////////////////////////////////////////////////////////////
         binding.rdBtnGroupLocationMode.check(sharedPreference.getInt("isLocation", 0))
         binding.rdBtnGroupLanguage.check(sharedPreference.getInt("isLanguage", 0))
         binding.rdBtnGroupTempratureUnit.check(sharedPreference.getInt("isTempratureUnit", 0))
@@ -197,7 +206,7 @@ private var strLocation:String=""
 
         editor.apply()
     }
-
+    
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

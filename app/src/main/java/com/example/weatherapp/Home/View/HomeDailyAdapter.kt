@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.DailyRowBinding
 import com.example.weatherapp.models.Daily
@@ -14,7 +15,9 @@ import com.example.weatherapp.models.Daily
 
 class HomeDailyAdapter(
     val dailyWeatherList: List<Daily>,
-    val timeZone:String
+    val timeZone:String,
+    val tempUnit:String
+
 
 ) :
     RecyclerView.Adapter<HomeDailyAdapter.Holder>() {
@@ -35,15 +38,27 @@ class HomeDailyAdapter(
         val dailyWeatherItem:Daily=dailyWeatherList[position]
 
         holder.bindingHolder.dayName.text=UtilsFunction.getDay(dailyWeatherItem.dt, timezone = timeZone)
-        holder.bindingHolder.tvDayTemp.text=dailyWeatherItem.temp.max.toString()
+        //holder.bindingHolder.tvDayTemp.text=dailyWeatherItem.temp.max.toString()
 
-/*
-        holder.bindingHolder.tvDayHumidity.text= dailyWeatherItem.humidity.toString()
-            holder.bindingHolder.tvDayPressure.text=dailyWeatherItem.pressure.toString()
-            holder.bindingHolder.tvDayWindSpeed.text=dailyWeatherItem.windSpeed.toString()
-            holder.bindingHolder.tvDayCloud.text=dailyWeatherItem.clouds.toString()*/
+
+        when (tempUnit){
+            Constants.FAHRENHEIT  ->holder.bindingHolder.tvDayTemp.text=
+                dailyWeatherItem.temp.max.toString()+"/"+dailyWeatherItem.temp.min.toString()+"°F"
+
+            Constants.CELSIUS->holder.bindingHolder.tvDayTemp.text=
+                UtilsFunction.convertFromKelvinToCelsius(dailyWeatherItem.temp.max)+
+                        "/"+UtilsFunction.convertFromKelvinToCelsius(dailyWeatherItem.temp.min)+"°C"
+
+            Constants.KELVIN->holder.bindingHolder.tvDayTemp.text=
+                UtilsFunction.convertFromKelvinToFahrenheit(dailyWeatherItem.temp.max)+
+                        "/"+UtilsFunction.convertFromKelvinToFahrenheit(dailyWeatherItem.temp.min)+"°K"
+        }
+
+
         holder.bindingHolder.wetherDalyDesc.text=dailyWeatherItem.weather[0].description
         Glide.with(holder.bindingHolder.wetherDaylyImagDesc.context).load(UtilsFunction.getWeatherIcon(dailyWeatherItem.weather[0].icon)).into(holder.bindingHolder.wetherDaylyImagDesc)
+
+
     }
 
     override fun getItemCount():Int=dailyWeatherList.size

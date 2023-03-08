@@ -20,6 +20,7 @@ import com.example.weatherapp.Model.Repository
 import com.example.weatherapp.Model.RoomWeatherModel
 import com.example.weatherapp.Networking.APIClient
 import com.example.weatherapp.Utils.ApiStateWeather
+import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentHomeBinding
 import com.example.weatherapp.models.Current
@@ -36,6 +37,10 @@ class HomeFragment : Fragment() {
 
     lateinit var sharedPreferences: SharedPreferences
 
+
+    lateinit var tempUnit:String
+    lateinit var windSpeedUnit:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,11 +54,15 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
          binding= FragmentHomeBinding.inflate(inflater,container,false)
 
-        sharedPreferences = requireActivity().getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
+        sharedPreferences = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+        tempUnit= sharedPreferences.getString("tempUnit","")!!
+        windSpeedUnit= sharedPreferences.getString("windUnit","")!!
 
         val localSource = ConcreteLocalSource(requireContext())
         val remoteSource=APIClient.getInstane()
-        repository =  Repository.getInstance(localSource,remoteSource)
+
+        repository =  Repository.getInstance(localSource,remoteSource,sharedPreferences)
 
 
 
@@ -69,8 +78,9 @@ class HomeFragment : Fragment() {
                     is ApiStateWeather.Success ->{
 
                         Log.i(TAG, "onCreateView:  ${it.data.timezone}")
-                        successDailyData(it.data.daily,it.data.timezone)
-                        successHourlyData(it.data.hourly,it.data.timezone)
+                        //   successDailyData(it.data.daily.map {it.copy(temp = UtilsFunction.convertFromKelvinToFahrenheit()},it.data.timezone)
+                        successDailyData(it.data.daily,it.data.timezone,tempUnit)
+                        successHourlyData(it.data.hourly,it.data.timezone,tempUnit)
                        successCurrentData(it.data.current)
 
                        viewModel.insertLastResponse(RoomWeatherModel(wether = it.data))
@@ -91,9 +101,9 @@ class HomeFragment : Fragment() {
     }
 
 
-    fun successDailyData(data:List<Daily>,timeZone:String){
+    fun successDailyData(data:List<Daily>,timeZone:String,tempUnit:String){
 
-        binding.recycleDay.adapter =HomeDailyAdapter(data,timeZone)
+        binding.recycleDay.adapter =HomeDailyAdapter(data,timeZone,tempUnit)
         binding.recycleDay.layoutManager = LinearLayoutManager(requireContext())
         binding.recycleDay.apply {
 
@@ -104,8 +114,18 @@ class HomeFragment : Fragment() {
     }
 
     fun successCurrentData(data:Current){
+        when (tempUnit){
+            Constants.FAHRENHEIT  ->binding.currentTemperature.text=
+                data.temp.toString()+"°F"
+
+            Constants.CELSIUS->binding.currentTemperature.text=
+                UtilsFunction.convertFromKelvinToCelsius(data.temp)+"°C"
+
+            Constants.KELVIN->binding.currentTemperature.text=
+                UtilsFunction.convertFromKelvinToFahrenheit(data.temp)+"°K"
+        }
         binding.wetherCurrentDesc.text=data.weather[0].description
-        binding.currentTemperature.text=data.temp.toString()
+       // binding.currentTemperature.text=data.temp.toString()
         binding.currentWeatherIcon.setImageResource(UtilsFunction.getWeatherIcon(data.weather[0].icon))
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         binding.tvHumidity.text=data.humidity.toString()
@@ -113,13 +133,22 @@ class HomeFragment : Fragment() {
         binding.tvPressure.text=data.pressure.toString()
         binding.tvWind.text=data.windDeg.toString()
         binding.tvVisibility.text=data.visibility.toString()
-        binding.tvWindSpeed.text=data.windSpeed.toString()
+        when (windSpeedUnit){
+            Constants.MILESHOUR  ->
+                binding.tvWindSpeed.text=
+                    UtilsFunction.convertMeterspersecToMilesperhour(data.windSpeed).toString()
+
+            Constants.METERSEC->
+                binding.tvWindSpeed.text=
+                    data.windSpeed.toString()
+        }
+        //binding.tvWindSpeed.text=data.windSpeed.toString()
 
     }
 
-    fun successHourlyData(data:List<Hourly>,timezone:String){
+    fun successHourlyData(data:List<Hourly>,timezone:String,tempUnit:String){
 
-        binding.recycleHourly.adapter =HomeHourlyAdapter(data,timezone)
+        binding.recycleHourly.adapter =HomeHourlyAdapter(data,timezone, tempUnit)
         binding.recycleHourly.layoutManager = LinearLayoutManager(requireContext())
         binding.recycleHourly.apply {
 

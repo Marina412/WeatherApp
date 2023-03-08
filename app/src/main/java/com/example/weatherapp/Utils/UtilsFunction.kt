@@ -24,7 +24,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class UtilsFunction {
+interface UtilsFunction {
 
 companion object {
     fun getWeatherIcon(weatherIcon: String): Int {
@@ -78,17 +78,19 @@ companion object {
     }
 
 
-    fun convertFromKelvinToCelsius(tempKelvin: Double): Double {
+    fun convertFromKelvinToCelsius(tempKelvin: Double): String {
         val tempCelsius = tempKelvin - 273.15f
-        return tempCelsius
+        return String.format(Locale.US, "%.1f", tempCelsius)
 
     }
 
-    fun convertFromKelvinToFahrenheit(tempKelvin: Double): Double {
+    fun convertFromKelvinToFahrenheit(tempKelvin: Double): String{
         val tempFahrenheit = 1.8 * (tempKelvin - 273) + 32
-        return tempFahrenheit
+        return String.format(Locale.US, "%.1f", tempFahrenheit)
 
     }
+
+
 
 
     fun convertMeterspersecToMilesperhour(metersPerSec: Double): Double {

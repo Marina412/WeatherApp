@@ -46,12 +46,15 @@ object Constants {
 
 
     //Wind Speed
-    const val MILESHOUR="miles/hour"
-    const val METERSEC="meter/sec"
+    const val MILESHOUR="mileshour"
+    const val METERSEC="metersec"
 
     //Notification
     const val NOTIFICATIONS="Notifications"
     const val ALERTS="Alerts"
+
+    //SharedPreferences
+    const val  PREFERENCE_NAME="WeatherPref"
 
 
 

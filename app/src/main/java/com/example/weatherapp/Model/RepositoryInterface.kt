@@ -30,6 +30,10 @@ interface RepositoryInterface{
     //suspend fun getItemFromFav(countryName:String): Flow<MapModel>
     suspend fun deleteFromFavorite(favModel: MapModel)
 
+    ///////////////////////////////////////////////
+
+    ////todo prefrance here
+
 
 
 
