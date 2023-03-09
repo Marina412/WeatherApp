@@ -36,10 +36,6 @@ class HomeHourlyAdapter(
         val hourlyWeatherItem:Hourly=hourlyWeatherList[position]
         holder.bindingHolder.hourlyTime.text=UtilsFunction.getCurrentTime(hourlyWeatherItem.dt, timezone =timeZone )
 
-
-        //holder.bindingHolder.hourlyTimelyTemp.text=hourlyWeatherItem.temp.toString()
-
-
         when (tempUnit){
            Constants.FAHRENHEIT  ->holder.bindingHolder.hourlyTimelyTemp.text=
                 hourlyWeatherItem.temp.toString()+"°F"
@@ -49,6 +45,9 @@ class HomeHourlyAdapter(
 
            Constants.KELVIN->holder.bindingHolder.hourlyTimelyTemp.text=
                 UtilsFunction.convertFromKelvinToFahrenheit(hourlyWeatherItem.temp)+"°K"
+
+            else->holder.bindingHolder.hourlyTimelyTemp.text=
+                UtilsFunction.convertFromKelvinToCelsius(hourlyWeatherItem.temp)+"°C"
         }
 
 

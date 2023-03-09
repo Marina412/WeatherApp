@@ -28,6 +28,7 @@ import com.example.weatherapp.Fav.View.MapFragment
 import com.example.weatherapp.MainActivity
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Constants
+import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentFavoriteBinding
 import com.example.weatherapp.databinding.FragmentSettingsBinding
 import com.google.android.gms.location.*
@@ -71,6 +72,7 @@ private var strLocation:String=""
 
         sharedPreference = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
         editor=sharedPreference.edit()
+
 //////////////////////////////////////////////////////////
         if(Locale.getDefault().getDisplayLanguage() == "العربية"){
             binding.rdBtnArabic.isChecked=true
@@ -79,17 +81,18 @@ private var strLocation:String=""
             binding.rdBtnEnglish.isChecked=true
             strLanguage=Constants.ENGLISH
         }
-        
-        
+
 //////////////////////////////////////////////////////////////////////////////////////
-        binding.rdBtnGroupLocationMode.check(sharedPreference.getInt("isLocation", 0))
-        binding.rdBtnGroupLanguage.check(sharedPreference.getInt("isLanguage", 0))
-        binding.rdBtnGroupTempratureUnit.check(sharedPreference.getInt("isTempratureUnit", 0))
-        binding.rdBtnGroupWindUnit.check(sharedPreference.getInt("isWindUnit", 0))
-        binding.rdBtnGroupNotification.check(sharedPreference.getInt("isNotification", 0))
+        binding.rdBtnGroupLocationMode.check(sharedPreference.getInt("isLocation", R.id.rdBtnGps))
+        binding.rdBtnGroupLanguage.check(sharedPreference.getInt("isLanguage", R.id.rdBtnEnglish))
+        binding.rdBtnGroupTempratureUnit.check(sharedPreference.getInt("isTempratureUnit", R.id.rdBtnCelsius))
+        binding.rdBtnGroupWindUnit.check(sharedPreference.getInt("isWindUnit",R.id.rdBtnMeterSec))
+        binding.rdBtnGroupNotification.check(sharedPreference.getInt("isNotification", R.id.rdBtnNotification))
 //////////////////////////////////////////////////////////////////
 
 
+
+        ///////////////////////////////////////////////////////////////////
 
         binding.rdBtnGroupLanguage.setOnCheckedChangeListener {
                 _, checkedId ->
@@ -107,6 +110,7 @@ private var strLocation:String=""
             editor.putInt("isLanguage",binding.rdBtnGroupLanguage.checkedRadioButtonId)
             editor.putString("language", strLanguage)
             editor.apply()
+
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         binding.rdBtnGroupTempratureUnit.setOnCheckedChangeListener {
@@ -177,10 +181,28 @@ private var strLocation:String=""
             when (radio) {
 
                 binding.rdBtnMap->{
-                    findNavController().navigate(R.id.settingsMapFragment)
+
+                    if(UtilsFunction.isOnline(requireContext()))
+                    {
+                        findNavController().navigate(R.id.settingsMapFragment)
+                    }
+                    else
+                    {
+                        Toast.makeText(requireContext(),R.string.offline_mode,Toast.LENGTH_LONG).show()
+                    }
                 }
                 binding.rdBtnGps->{
-                    getLastLocation()
+
+                    if(UtilsFunction.isOnline(requireContext()))
+                    {
+                        getLastLocation()
+                    }
+                    else
+                    {
+                        Toast.makeText(requireContext(),R.string.offline_mode,Toast.LENGTH_LONG).show()
+                    }
+
+
                 }
             }
 

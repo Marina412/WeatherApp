@@ -36,10 +36,6 @@ class ConcreteLocalSource(context: Context) : LocalSource {
         favDAO!!.getFromFavorite()
 
 
-  /*  override suspend fun getItemFromFav(countryName: String): MapModel {
-        return favDAO!!.getItemFromFav(countryName)
-    }
-*/
     override suspend fun deleteFromFavorite(favModel: MapModel) {
         favDAO?.deleteFromFavorite(favModel)
     }

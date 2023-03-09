@@ -42,21 +42,6 @@ companion object {
         }
     }
 
-    fun convertDateAndTimeToMills(timeAndDate: String?): Long {
-        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm")
-        val timeInMilliseconds: Long
-        var mDate: Date? = null
-        try {
-            mDate = sdf.parse(timeAndDate)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        Log.i("TAG", "Date m datee: $mDate")
-        timeInMilliseconds = mDate!!.time
-        println("Date in milli :: $timeInMilliseconds")
-        return timeInMilliseconds
-    }
-
 
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
@@ -99,22 +84,6 @@ companion object {
         return milesPerHour
     }
 
-/*
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getCurrentDateTime(
-        dt: Long,
-        timezone: String,
-        format: String = "EEE, MMMM d K:mm a"
-    ): String {
-
-        val zoneId = ZoneId.of(timezone)
-        val instant = Instant.ofEpochSecond(dt)
-        val formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH)
-        return instant.atZone(zoneId).format(formatter)
-    }
-*/
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getDay(dt: Long, timezone: String, format: String = "EEE"): String {
@@ -135,37 +104,18 @@ companion object {
         return instant.atZone(zoneId).format(formatter)
     }
 
-/*
-    fun convertTimeInMillesToMinutes(time: Long): String {
-        val myDate = Date(time)
-        val formatter = SimpleDateFormat("hh:mm a")
-        val myTime = formatter.format(myDate)
-        return myTime
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getCurrentDate(
+        dt: Long,
+        timezone: String,
+        format: String = "EEE,MMMM,d,y"// K:mm:ss a"
+    ): String {
+
+        val zoneId = ZoneId.of(timezone)
+        val instant = Instant.ofEpochSecond(dt)
+        val formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH)
+        return instant.atZone(zoneId).format(formatter)
     }
-
-    fun convertDateInMillsToDate(date: Long): String {
-        val myDate = Date(date)
-        val formatter = SimpleDateFormat("dd/M/yyyy")
-        val myTime = formatter.format(myDate)
-        return myTime
-    }*/
-//todo
-
-/*
-
-    private fun getAddressFromLocation(latitude: Double, longitude: Double, context: Context): String {
-        val addresses: List<Address>
-        var address = ""
-        val geocoder = Geocoder(context, Locale.getDefault())
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1) as List<Address>
-            address = addresses[0].getAddressLine(0)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return address
-    }
-*/
 
     @SuppressLint("MissingPermission")
     fun getAddressFromLocation(activity: Activity, getMyLocation: (location: Location) -> Unit) {
@@ -197,6 +147,7 @@ companion object {
         val addresses=geocoder.getFromLocation(lat,lon,1)
         return addresses?.get(0)?.getAddressLine(0).toString()
     }
+    //todo
 
     fun getAddress(context: Context,lat:Double, lon:Double)=Geocoder(context).
     getFromLocation(lat,lon,5)?.get(0)

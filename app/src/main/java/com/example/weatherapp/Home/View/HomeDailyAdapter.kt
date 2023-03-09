@@ -38,8 +38,6 @@ class HomeDailyAdapter(
         val dailyWeatherItem:Daily=dailyWeatherList[position]
 
         holder.bindingHolder.dayName.text=UtilsFunction.getDay(dailyWeatherItem.dt, timezone = timeZone)
-        //holder.bindingHolder.tvDayTemp.text=dailyWeatherItem.temp.max.toString()
-
 
         when (tempUnit){
             Constants.FAHRENHEIT  ->holder.bindingHolder.tvDayTemp.text=
@@ -52,6 +50,11 @@ class HomeDailyAdapter(
             Constants.KELVIN->holder.bindingHolder.tvDayTemp.text=
                 UtilsFunction.convertFromKelvinToFahrenheit(dailyWeatherItem.temp.max)+
                         "/"+UtilsFunction.convertFromKelvinToFahrenheit(dailyWeatherItem.temp.min)+"°K"
+
+            else->holder.bindingHolder.tvDayTemp.text=
+                UtilsFunction.convertFromKelvinToCelsius(dailyWeatherItem.temp.max)+
+                        "/"+UtilsFunction.convertFromKelvinToCelsius(dailyWeatherItem.temp.min)+"°C"
+
         }
 
 

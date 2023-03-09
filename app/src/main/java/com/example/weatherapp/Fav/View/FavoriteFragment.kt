@@ -103,7 +103,19 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
 
 
         binding.btnAddFavLoc.setOnClickListener {
-            findNavController().navigate(R.id.mapFragment)
+
+
+            if(UtilsFunction.isOnline(requireContext()))
+            {
+                findNavController().navigate(R.id.mapFragment)
+            }
+
+            else
+            {
+                Toast.makeText(requireContext(),R.string.offline_mode,Toast.LENGTH_LONG).show()
+            }
+
+
         }
 
 

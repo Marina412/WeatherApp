@@ -18,9 +18,6 @@ class Repository private constructor(var localSource : LocalSource,
                                      ): RepositoryInterface {
 
 
-    //  val apiClient = APIClient.retrofitInstnce.create(RemotSource::class.java)
-
-
     companion object {
         private var instance: Repository? = null
         fun getInstance(
@@ -41,14 +38,6 @@ class Repository private constructor(var localSource : LocalSource,
 
 
     override fun getAllResponseFromAPI(lat: Double, lon: Double, exclude: String): Flow<Root> = flow {
-
-//        emit(
-//            remotSource.getWeatherDataCurrentStander(
-//            latitude=33.44,
-//            longitude =-94.04,
-//            exclude="minutely"))
-
-
         emit(
             remotSource.getWeatherDataCurrentStander(
                 latitude=lat,
@@ -57,21 +46,6 @@ class Repository private constructor(var localSource : LocalSource,
 
 
     }
-
-
-/*
-
-    override fun getAllResponseFromAPI() : Flow<Root>  = flow {
-
-        emit(apiClient.getWeatherDataCurrentStander(
-            latitude=33.44,
-            longitude =-94.04,
-            exclude="minutely"))
-
-
-    }
-*/
-
 
     override suspend fun insertLastResponse(weatherModel: RoomWeatherModel) =localSource.insertLastResponse(weatherModel)
 
@@ -83,40 +57,7 @@ class Repository private constructor(var localSource : LocalSource,
 
     override  fun getAllFavoriteFromRoom()=localSource.getFromFavorite()
 
-
-   /* override suspend fun getItemFromFav(countryName: String): Flow<MapModel> = flow {
-        emit(localSource.getItemFromFav(countryName))
-    }
-*/
     override suspend fun deleteFromFavorite(favModel: MapModel) =localSource.deleteFromFavorite(favModel)
-
-
-    /* fun getWeatherDataCurrentStander() : Flow<Root>  = flow {
-
-         emit(apiClient.getWeatherDataCurrentStander(
-             latitude=33.44,
-             longitude =-94.04,
-             exclude="minutely"))
-
-
-
-     }
- */
-    //////////////////////////////////////////////////////////////
-/*
-
-   fun getAllProductsFromAPITESTING() :Flow<String> =flow {
-        var test= apiClient.getWeatherDataCurrentStander(
-            latitude=33.44,
-            longitude =-94.04,
-            exclude="minutely")
-            var data= Gson().toJson(test)
-
-            emit(data.toString())
-    }
-
-*/
-
 
 
 

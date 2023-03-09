@@ -27,7 +27,6 @@ interface RepositoryInterface{
 
      fun getAllFavoriteFromRoom() : Flow<List<MapModel>>
 
-    //suspend fun getItemFromFav(countryName:String): Flow<MapModel>
     suspend fun deleteFromFavorite(favModel: MapModel)
 
     ///////////////////////////////////////////////

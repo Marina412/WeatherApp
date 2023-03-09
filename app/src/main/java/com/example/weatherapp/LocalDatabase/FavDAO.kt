@@ -13,10 +13,6 @@ interface FavDAO {
     @Query("SELECT * FROM weatherFavorite")
     fun getFromFavorite() : Flow<List<MapModel>>
 
-/*
-    @Query("SELECT * From weatherFavorite Where countryName=:countryName")
-    fun getItemFromFav(countryName:String): MapModel*/
-
     @Delete
     fun deleteFromFavorite(favModel:MapModel)
 

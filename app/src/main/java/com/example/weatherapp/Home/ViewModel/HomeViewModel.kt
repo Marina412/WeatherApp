@@ -24,14 +24,7 @@ class HomeViewModel(val repository: RepositoryInterface): ViewModel() {
     var data = _data.asStateFlow()
 //////////////////////////////////////////////////////////////////////////////////////////
 private val iRepository:RepositoryInterface=repository
-//////////////////////////////////////////////////////////////
 
-
-//    init {
-//
-//       // getAllWeatherStander(latitude=33.44,longitude =-94.04)
-//
-//    }
     fun getAllWeatherStander(latitude: Double, longitude: Double, exclude: String="minutely") =
         viewModelScope.launch {
         iRepository.getAllResponseFromAPI(latitude,longitude,exclude).catch { e ->

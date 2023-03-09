@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.weatherapp.MainActivity
 import com.example.weatherapp.Utils.Constants
-import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.databinding.ActivitySplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -27,9 +26,6 @@ class SplashActivity : AppCompatActivity() {
 
         val  sharedPreference = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
         val editor=sharedPreference.edit()
-//        33.44,
-////            longitude =-94.04
-//
         editor.putString("latitude","33.44" )
         editor.putString("longitude","-94.04" )
         editor.apply()

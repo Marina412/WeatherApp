@@ -56,28 +56,6 @@ class FavoriteViewModel(val repository: RepositoryInterface): ViewModel() {
             iRepository.deleteFromFavorite(favModel)
         }
     }
-/*
-    fun getItemFromFav(countryName:String)=
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                iRepository.getItemFromFav(countryName).catch { e ->
-                    _data.value = ApiStateFav.Failure(e)
-                }.collect { data ->
-                    _data.value = ApiStateFav.Success(data)
-                }
 
-            }
-        }*/
-
-/*
-
-    fun getAllWeatherStander(latitude: Double, longitude: Double, exclude: String) = viewModelScope.launch {
-
-        iRepository.getAllResponseFromAPI(latitude,longitude,exclude).catch { e ->
-            _dataWeather.value = ApiState.Failure(e)
-        }.collect { data ->
-            _dataWeather.value = ApiState.Success(data)
-        }
-    }*/
 
 }

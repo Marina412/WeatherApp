@@ -18,10 +18,10 @@ abstract class WeatherDataBase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: WeatherDataBase? = null
-        //one thread at a time to access this method
+
         @Synchronized
-        fun getInstance(context: Context): WeatherDataBase{
-            return INSTANCE?: synchronized(this){
+        fun getInstance(context: Context): WeatherDataBase {
+            return INSTANCE ?: synchronized(this) {
                 val db = Room.databaseBuilder(
                     context.applicationContext,
                     WeatherDataBase::class.java,
@@ -35,29 +35,3 @@ abstract class WeatherDataBase : RoomDatabase() {
         }
     }
 }
-/*
-
-
-
-
-abstract class  WeatherDataBase : RoomDatabase() {
-    abstract fun weatherDAO(): WeatherDAO
-}
-object AppDatabase {
-    private var INSTANCE: WeatherDataBase? = null
-    fun getInstance(context: Context): WeatherDataBase {
-        if (INSTANCE == null) {
-            synchronized(WeatherDataBase::class) {
-                INSTANCE = buildRoomDB(context)
-            }
-        }
-        return INSTANCE!!
-    }
-    private fun buildRoomDB(context: Context) =
-        Room.databaseBuilder(
-            context.applicationContext,
-            WeatherDataBase::class.java,
-            "WeatherRoom"
-        ).build()
-}
-*/

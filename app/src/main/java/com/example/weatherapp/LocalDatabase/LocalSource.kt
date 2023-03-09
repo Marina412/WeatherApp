@@ -12,7 +12,6 @@ interface LocalSource {
     //fav
     suspend fun insertToFavorite(favModel: MapModel)
     fun getFromFavorite() : Flow<List<MapModel>>
-   // suspend fun getItemFromFav(countryName:String): MapModel
     suspend fun deleteFromFavorite(favModel: MapModel)
 
 

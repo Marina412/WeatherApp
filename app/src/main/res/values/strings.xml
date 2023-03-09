@@ -16,7 +16,7 @@
     <string name="Language">Language</string>
     <string name="English">English</string>
     <string name="Arabic">Arabic</string>
-    <string name="TemperatureUnit">Temperature Unit</string>
+    <string name="TemperatureUnit">Temperature</string>
     <string name="Kelvin">Kelvin (K°)</string>
     <string name="Kelvin2">°k</string>
     <string name="Celsius">Celsius (C°)</string>
@@ -58,7 +58,7 @@
     <string name="go_to_location_settings_dialog_msg">please allow go to ٍsettings and open location </string>
     <string name="Details">Details</string>
     <string name="Hours48">48 Hours</string>
-    <string name="wind_deg">wind_deg</string>
+    <string name="wind_deg">Wind Degree</string>
     <string name="alert_screen_title">Your alerts</string>
     <string name="delete_confirm">Are you sure to delete this location?</string>
     <string name="delete_confirm_alert">Are you sure to delete this alert?</string>
