@@ -1,8 +1,6 @@
 package com.example.weatherapp.Model
 
-import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.example.weatherapp.models.Root
 import com.google.gson.Gson
 
 class Converters {

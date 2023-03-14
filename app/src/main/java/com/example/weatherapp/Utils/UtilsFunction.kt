@@ -1,24 +1,14 @@
 package com.example.weatherapp.Utils
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.location.Geocoder
-import android.location.Location
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.os.Looper
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.R
-import com.example.weatherapp.R.string
 import com.google.android.gms.location.*
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -38,7 +28,21 @@ companion object {
             "11d", "11n" -> return R.drawable.thunderstorm
             "13d", "13n" -> return R.drawable.snow
             "5d", "5n" -> return R.drawable.mist
+            "50d", "50n" -> return R.drawable.mist
             else -> return R.drawable.sun_logo
+        }
+    }
+
+    fun getArabicDayName(dayName: String): String {
+        when (dayName) {
+            "Sat" -> return "السبت"
+            "Sun" -> return "الاحد"
+            "Mon" -> return "الاثنين"
+            "Tue" -> return "الخميس"
+            "Wed" -> return "الاربعاء"
+            "Thu" -> return "الثلاثاء"
+            "Fri" -> return "الجمعة"
+            else->return " "
         }
     }
 
@@ -108,7 +112,7 @@ companion object {
     fun getCurrentDate(
         dt: Long,
         timezone: String,
-        format: String = "EEE,MMMM,d,y"// K:mm:ss a"
+        format: String = "EEE,MMMM d y"
     ): String {
 
         val zoneId = ZoneId.of(timezone)
@@ -117,60 +121,25 @@ companion object {
         return instant.atZone(zoneId).format(formatter)
     }
 
-    @SuppressLint("MissingPermission")
-    fun getAddressFromLocation(activity: Activity, getMyLocation: (location: Location) -> Unit) {
-
-
-        var mFusedLocationClient: FusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(activity)
-
-        val mLocationRequest = LocationRequest()
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-        mLocationRequest.setInterval(0)
-
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, object : LocationCallback() {
-
-            @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-            override fun onLocationResult(locationResult: LocationResult) {
-                val mLastLocation: Location? = locationResult.getLastLocation()
-                getMyLocation(mLastLocation!!)
-            }
-
-        }, Looper.myLooper())
-
-    }
 
    fun getFullAddress(lat:Double, lon:Double,context: Context): String {
         val geocoder= Geocoder(context, Locale.getDefault())
         val addresses=geocoder.getFromLocation(lat,lon,1)
-        return addresses?.get(0)?.getAddressLine(0).toString()
-    }
-    //todo
-
-    fun getAddress(context: Context,lat:Double, lon:Double)=Geocoder(context).
-    getFromLocation(lat,lon,5)?.get(0)
-
-
-     fun showDialog(title:String,message:String ,alertButtonResult: AlertButtonResult, mapModel: MapModel,context: Context) {
-        val alertBuild: AlertDialog.Builder = AlertDialog.Builder(context)
-        alertBuild.setTitle(title)
-        alertBuild.setMessage(message)
-        alertBuild.setPositiveButton(string.ok) {
-                _, _ ->
-            Toast.makeText(context, "${context.getString(string.message_Location_saved)}  $mapModel ", Toast.LENGTH_LONG).show()
-
-           alertButtonResult.IfOk(mapModel)
-        }
-        alertBuild.setNegativeButton(string.cancel) {
-                _, _ ->
-            Toast.makeText(context,context.getString(string.message_Location_canceld), Toast.LENGTH_SHORT).show()
-        }
-        val alert = alertBuild.create()
-        alert.show()
+        return if (addresses?.isNotEmpty() == true) addresses[0]!!.getAddressLine(0).toString() else ""
     }
 
+
+
+    fun changeLanguage(lang:String, context: Context){
+        val config = context.resources.configuration
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        context.createConfigurationContext(config)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+        context.startActivity(Intent(context, context::class.java))
+
+    }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

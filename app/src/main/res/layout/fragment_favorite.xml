@@ -6,34 +6,34 @@
 
         android:id="@+id/favoriteFragment_nav"
         android:layout_width="match_parent"
-        android:background="@drawable/gradient_view_background_one"
+        android:background="@drawable/background"
         android:layout_height="match_parent"
         tools:context=".Fav.View.FavoriteFragment">
 
 
-        <TextView
-            android:id="@+id/fav_label"
+    <TextView
+        android:id="@+id/fav_label"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/favorite"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="parent"
 
-            android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.452"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favRecycle"
-        android:layout_width="328dp"
-        android:layout_height="309dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="350dp"
+        android:layout_height="450dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,15 +41,15 @@
 
     <Button
         android:id="@+id/btnAddFavLoc"
-        android:layout_width="86dp"
-        android:layout_height="71dp"
-        android:background="@drawable/baseline_location_on_24"
+        android:layout_width="62dp"
+        android:layout_height="73dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/baseline_add_location_24"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBaseline_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favRecycle"
-        app:layout_constraintVertical_bias="0.206" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

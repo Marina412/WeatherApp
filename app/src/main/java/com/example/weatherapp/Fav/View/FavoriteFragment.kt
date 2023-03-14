@@ -2,7 +2,6 @@ package com.example.weatherapp.Fav.View
 
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,17 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.Data.Repository
 import com.example.weatherapp.Fav.ViewModel.FavoriteViewModel
 import com.example.weatherapp.Fav.ViewModel.FavoriteViewModelFactory
-import com.example.weatherapp.Home.View.HomeFragment
-import com.example.weatherapp.LocalDatabase.ConcreteLocalSource
 import com.example.weatherapp.Model.MapModel
-import com.example.weatherapp.Model.Repository
-import com.example.weatherapp.Networking.APIClient
 import com.example.weatherapp.R
-import com.example.weatherapp.Utils.AlertButtonResult
 import com.example.weatherapp.Utils.ApiStateFav
 import com.example.weatherapp.Utils.Constants
+import com.example.weatherapp.Utils.CustomConfermation.AlertButtonResult
+import com.example.weatherapp.Utils.CustomConfermation.UtilsDialog
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentFavoriteBinding
 
@@ -39,7 +36,7 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
     lateinit var fViewModelFactory: FavoriteViewModelFactory
     lateinit var repository: Repository
 
-    lateinit var alertButtonResult:AlertButtonResult
+    lateinit var alertButtonResult: AlertButtonResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,23 +50,14 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
         // Inflate the layout for this fragment
          binding= FragmentFavoriteBinding.inflate(inflater,container,false)
 
-        val localSource = ConcreteLocalSource(requireContext())
-        val remoteSource= APIClient.getInstane()
+
        val sharedPreferences = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
-        repository =  Repository.getInstance(localSource,remoteSource,sharedPreferences)
+        repository =  Repository.getInstance(requireActivity().application)
 
         fViewModelFactory = FavoriteViewModelFactory(repository)
         viewModel = ViewModelProvider(this, fViewModelFactory).get(FavoriteViewModel::class.java)
 
-
-
-        alertButtonResult= object : AlertButtonResult {
-            override fun IfOk(favModel: MapModel) {
-                viewModel.deleteFromFav(favModel )
-            }
-
-        }
 
 
 
@@ -78,7 +66,7 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
             viewModel.data.collect{
                 when(it){
                     is ApiStateFav.Success ->{
-                        successFavData(it.data)
+                        successFavData(it.dataState)
                     }
                     is ApiStateFav.Failure -> {
                         Toast.makeText(requireContext(), "${it.msg}", Toast.LENGTH_LONG).show()
@@ -136,9 +124,25 @@ class FavoriteFragment : Fragment(), FavOnClickListener{
 
 
     override fun onDeleteClick(favorite: MapModel) {
-        UtilsFunction.showDialog(getString(R.string.title_delete_fav_loc),
+
+
+        alertButtonResult= object : AlertButtonResult {
+            override fun IfOk() {
+                viewModel.deleteFromFav(favorite )
+               Toast.makeText(requireContext(), "${getString(R.string.message_Deletion_Done)}  $favorite ", Toast.LENGTH_LONG).show()
+
+            }
+
+            override fun IfCancel() {
+                Toast.makeText(requireContext(),getString(R.string.message_Deletion_canceld), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+
+        UtilsDialog.showDialog(getString(R.string.title_delete_fav_loc),
             getString(R.string.message_delete_fav_loc),
-            alertButtonResult,favorite,requireContext())
+            alertButtonResult,requireContext())
     }
 
     override fun onFavClick(favorite: MapModel) {

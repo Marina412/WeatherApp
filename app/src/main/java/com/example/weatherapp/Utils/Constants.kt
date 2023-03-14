@@ -9,6 +9,8 @@ object Constants {
     const val GOOGL_MAP_API_KEY="AIzaSyAbuHdF1hB_ddtCtgEZ7iE3cDqXk4zpVJU"
 
     const val PERMISSION_ID=11
+    //worker channel
+    const val CHANNEL_ID="CHANNEL_ID"
 
 
     //ExCLUDE
@@ -18,22 +20,6 @@ object Constants {
     //Langudes
     const val ARABIC="ar"
     const val ENGLISH ="en"
-/*
-    const val ARABIC="Arabic"
-    const val ENGLISH ="English"
-*/
-    //Units
-/*
-    //Tempret
-    const val FAHRENHEIT="imperial"
-    const val CELSIUS="metric"
-    const val KELVIN="standard"
-
-
-    //Wind Speed
-    const val MILESHOUR="imperial"
-    const val METERSEC="metric"*/
-
 
 
     //Tempret

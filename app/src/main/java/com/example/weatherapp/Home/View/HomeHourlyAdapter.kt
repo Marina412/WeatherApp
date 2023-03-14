@@ -1,17 +1,16 @@
 package com.example.weatherapp.Home.View
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.weatherapp.Model.Hourly
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.HourlyRowBinding
-import com.example.weatherapp.models.Hourly
 
 
 class HomeHourlyAdapter(
@@ -33,7 +32,7 @@ class HomeHourlyAdapter(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val hourlyWeatherItem:Hourly=hourlyWeatherList[position]
+        val hourlyWeatherItem: Hourly =hourlyWeatherList[position]
         holder.bindingHolder.hourlyTime.text=UtilsFunction.getCurrentTime(hourlyWeatherItem.dt, timezone =timeZone )
 
         when (tempUnit){

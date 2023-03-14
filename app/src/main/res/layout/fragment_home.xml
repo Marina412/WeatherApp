@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/homeFragment_nav"
         android:layout_width="match_parent"
-        android:background="@drawable/gradient_view_background_one"
+        android:background="@drawable/background"
         android:layout_height="match_parent"
         tools:context="Home.View.HomeFragment">
 
@@ -24,16 +24,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="20dp">
+
                 <TextView
                     android:id="@+id/homeCurrentLoc_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="30dp"
                     android:text="Title"
 
+                    android:textColor="@color/white"
                     android:textSize="40sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
 
                     app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +48,7 @@
                     android:layout_marginTop="40dp"
                     android:drawableLeft="@drawable/baseline_location_on_24"
                     android:text="@string/current_location"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +61,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="70dp"
+                    android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/nav_logos"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="50dp"
@@ -83,13 +86,14 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/currentDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
 
-                                android:textColor="@color/black"
+                                 
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -99,7 +103,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
 
-                                android:textColor="@color/black"
+                                 
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -108,7 +112,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
-                                android:textColor="@color/black"
+                                 
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -117,7 +121,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="serif"
-                                android:textColor="@color/black"
+                                 
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -125,10 +129,10 @@
                         </LinearLayout>
 
                         <View
-                            android:layout_width="2dp"
-                            android:layout_height="46dp"
+                            android:layout_width="1dp"
+                            android:layout_height="69dp"
                             android:layout_gravity="center"
-                            android:background="@color/black" />
+                            android:background="@color/bord" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -140,7 +144,7 @@
                             <ImageView
                                 android:id="@+id/currentWeatherIcon"
                                 android:layout_width="wrap_content"
-                                android:layout_height="140dp"
+                                android:layout_height="100dp"
                                 android:src="@drawable/sun_logo" />
 
 
@@ -154,11 +158,11 @@
                     android:id="@+id/houeluForcast"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="60dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="20dp"
                     android:text="@string/Hourly"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
 
@@ -172,7 +176,9 @@
                     android:id="@+id/recycleHourly"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/houeluForcast" />
@@ -183,10 +189,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="10dp"
                     android:text="@string/DailyForecast"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -198,12 +204,11 @@
                     android:id="@+id/recycleDay"
                     android:layout_width="match_parent"
                     android:layout_height="475dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="9dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/card"
                     android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="10dp"
                     android:paddingTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -216,7 +221,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/nav_logos"
                     app:cardCornerRadius="15dp"
@@ -251,7 +256,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/Humidity"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -261,7 +266,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="@+id/tvHumidityLab"
                                     app:layout_constraintStart_toStartOf="@+id/tvHumidityLab"
@@ -279,7 +284,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/visibility"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -289,7 +294,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="@+id/tvVisibilityLab"
                                     app:layout_constraintStart_toStartOf="@+id/tvVisibilityLab"
@@ -308,7 +313,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/Clouds"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -318,7 +323,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="@+id/tvCloudsLab"
                                     app:layout_constraintStart_toStartOf="@+id/tvCloudsLab"
@@ -348,7 +353,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/Pressure"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -358,7 +363,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="@+id/tvPressureLab"
                                     app:layout_constraintStart_toStartOf="@+id/tvPressureLab"
@@ -376,7 +381,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/wind_speed"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -386,7 +391,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="@+id/tvWindSpeedLab"
                                     app:layout_constraintStart_toStartOf="@+id/tvWindSpeedLab"
@@ -405,7 +410,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/wind_deg"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -415,7 +420,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:textColor="@color/black"
+
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="@+id/tvWindDeg"
                                     app:layout_constraintStart_toStartOf="@+id/tvWindDeg"
@@ -431,8 +436,8 @@
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="317dp"
-                    android:layout_height="66dp"
+                    android:layout_width="320dp"
+                    android:layout_height="65dp"
                     android:layout_marginTop="420dp"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/nav_logos"

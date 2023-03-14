@@ -68,6 +68,10 @@
     <string name="offline_mode">انت الان غير متصل بالانترنت !!</string>
     <string name="current_location">الموقع الحالى</string>
     <string name="notification">اشعارات</string>
+    <string name="welcome">مرحبًا بك </string>
+
+    <string name="welcome_back">مرحبًا بعودتك </string>
+
 
 
 
@@ -84,6 +88,20 @@
 
     <string name="title_delete_fav_loc">حذف من المواقع المفضله</string>
     <string name="message_delete_fav_loc">هل تريد حذف الموقع من المواقع المفضله؟</string>
+
+    <string name="title_delete_alerts_loc">حذف منبه</string>
+    <string name="message_delete_alerts_loc">هل تريد حذف هذا المنبه؟</string>
+
+    <string name="message_Deletion_canceld">تم الغاء الحذف!!</string>
+
+    <string name="message_Deletion_Done">تم الحذف</string>
+
+    <string name="select_alert_lebal">اختر المنبه</string>
+    <string name="dailog_permission_title">SKYOURS PERMISSION</string>
+    <string name="dailog_permission_message">الرجاء السماح للأذونات </string>
+
+    <string name="alert_notfication_message">لا يوجد توقعات عاجله لليوم   </string>
+
 
 
 </resources>

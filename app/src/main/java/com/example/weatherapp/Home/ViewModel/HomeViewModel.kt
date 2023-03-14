@@ -1,15 +1,10 @@
 package com.example.weatherapp.Home.ViewModel
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapp.Model.Repository
-import com.example.weatherapp.Model.RepositoryInterface
+import com.example.weatherapp.Data.RepositoryInterface
 import com.example.weatherapp.Model.RoomWeatherModel
 import com.example.weatherapp.Utils.ApiStateWeather
-import com.example.weatherapp.Utils.Constants
-import com.example.weatherapp.Utils.UtilsFunction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,11 +18,11 @@ class HomeViewModel(val repository: RepositoryInterface): ViewModel() {
     private var _data = MutableStateFlow<ApiStateWeather>(ApiStateWeather.Loading)
     var data = _data.asStateFlow()
 //////////////////////////////////////////////////////////////////////////////////////////
-private val iRepository:RepositoryInterface=repository
+private val iRepository: RepositoryInterface =repository
 
-    fun getAllWeatherStander(latitude: Double, longitude: Double, exclude: String="minutely") =
+    fun getAllWeatherStander(latitude: Double, longitude: Double,lang:String) =
         viewModelScope.launch {
-        iRepository.getAllResponseFromAPI(latitude,longitude,exclude).catch { e ->
+        iRepository.getAllResponseFromAPI(latitude,longitude,lang).catch { e ->
             _data.value = ApiStateWeather.Failure(e)
         }.collect { data ->
             ////////todo map withe shard
@@ -52,7 +47,7 @@ private val iRepository:RepositoryInterface=repository
                     _data.value = ApiStateWeather.Failure(e)
                 }.collect { data ->
 
-                    _data.value = ApiStateWeather.Success(data.wether)
+                    _data.value = ApiStateWeather.Success(data.weather)
                 }
 
             }

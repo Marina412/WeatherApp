@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.weatherapp.Model.Daily
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.DailyRowBinding
-import com.example.weatherapp.models.Daily
 
 
 class HomeDailyAdapter(
     val dailyWeatherList: List<Daily>,
     val timeZone:String,
-    val tempUnit:String
+    val tempUnit:String,
+    val lang:String
 
 
 ) :
@@ -35,9 +36,21 @@ class HomeDailyAdapter(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val dailyWeatherItem:Daily=dailyWeatherList[position]
+        val dailyWeatherItem: Daily =dailyWeatherList[position]
 
-        holder.bindingHolder.dayName.text=UtilsFunction.getDay(dailyWeatherItem.dt, timezone = timeZone)
+        when(lang){
+            Constants.ENGLISH->
+                holder.bindingHolder.dayName.text=UtilsFunction.getDay(dailyWeatherItem.dt, timezone = timeZone)
+
+            Constants.ARABIC->
+                holder.bindingHolder.dayName.text=UtilsFunction.getArabicDayName(
+                    UtilsFunction.getDay(dailyWeatherItem.dt, timezone = timeZone))
+
+            else->holder.bindingHolder.dayName.text=UtilsFunction.getDay(dailyWeatherItem.dt, timezone = timeZone)
+
+        }
+
+
 
         when (tempUnit){
             Constants.FAHRENHEIT  ->holder.bindingHolder.tvDayTemp.text=

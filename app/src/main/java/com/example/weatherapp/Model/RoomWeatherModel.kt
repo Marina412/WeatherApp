@@ -3,7 +3,6 @@ package com.example.weatherapp.Model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.weatherapp.models.Root
 
 @Entity(tableName = "weatherResponse")
 data class RoomWeatherModel(
@@ -11,7 +10,7 @@ data class RoomWeatherModel(
     @ColumnInfo(name = "id")
     val id:Int?=null,
     @ColumnInfo(name = "allresponse")
-    val wether: Root
+    val weather: Root
 
 
 )

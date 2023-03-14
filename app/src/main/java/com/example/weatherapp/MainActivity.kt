@@ -1,32 +1,39 @@
 package com.example.weatherapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.weatherapp.Alarts.View.AlertsFragment
-import com.example.weatherapp.Fav.View.FavoriteFragment
-import com.example.weatherapp.Fav.View.MapFragment
-import com.example.weatherapp.Home.View.HomeFragment
-import com.example.weatherapp.Settings.View.SettingsFragment
+import com.example.weatherapp.Utils.Constants
+import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-   lateinit var binding: ActivityMainBinding
+       lateinit var binding: ActivityMainBinding
+
+
+    lateinit var sharedPreference: SharedPreferences
+    lateinit var editor: SharedPreferences.Editor
+
         override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       //setContentView(R.layout.activity_main)
-      // val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
+
+           sharedPreference = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+           editor=sharedPreference.edit()
+//            editor.putBoolean("isRegistered",false)
+//            editor.apply()
+
+            val isRegistered=sharedPreference.getBoolean("isRegistered",false)
+
 
             val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
             val navController: NavController? = findNavController()
@@ -35,31 +42,31 @@ class MainActivity : AppCompatActivity() {
            NavigationUI.setupWithNavController( bottomNavigationView,it)
 
        }
-//       val customDialog=CustomDialog(this).customLocationDialog()//.showOptionDialog()
-//        customDialog.show()
-      /* navgation(HomeFragment())
-            binding.bottomNavigationView.setOnItemSelectedListener {
-                when(it.itemId){
-                    R.id.homeFragment->navgation(HomeFragment())
-                    R.id.settingsFragment->navgation(SettingsFragment())
-                    R.id.favoriteFragment->navgation(FavoriteFragment())
-                    R.id.alertsFragment->navgation(AlertsFragment())
+            navController?.navigate(R.id.blankFragment)
+            if (isRegistered == false) {
+                editor.putBoolean("isRegistered", true)
+                editor.apply()
+                navController?.navigate(R.id.firstLocationDailog)
+                Toast.makeText(this, getString(R.string.welcome), Toast.LENGTH_SHORT).show()
 
-                }
-                true
-            }*/
-    }
+            } else {
+                    if(UtilsFunction.isOnline(this)){
+                        Toast.makeText(this, getString(R.string.welcome_back), Toast.LENGTH_SHORT).show()
+                    }
+                    else{
 
+                        Toast.makeText(this, getString(R.string.welcome_back)+getString(R.string.offline_mode), Toast.LENGTH_SHORT).show()
+                    }
+
+                navController?.navigate(R.id.homeFragment)
+            }
+        }
     private fun findNavController():NavController? {
         val navHostFragment = (this as? MainActivity)?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
         return navHostFragment?.navController
     }
 
-   /* fun navgation(fragment: Fragment){
-        val fragmentManger=supportFragmentManager
-        val fragmentTransition=fragmentManger.beginTransaction()
-        fragmentTransition.replace(R.id.nav_host_fragment,fragment)
-        fragmentTransition.commit()
-    }*/
+
+
 
 }

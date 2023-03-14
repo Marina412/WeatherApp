@@ -1,5 +1,5 @@
 package com.example.weatherapp.Utils
-import com.example.weatherapp.models.Root
+import com.example.weatherapp.Model.Root
 
 
 sealed class ApiStateWeather {

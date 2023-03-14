@@ -8,8 +8,8 @@
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_view_background_one"
-            tools:context=".Alarts.View.AlertsFragment"
+            android:background="@drawable/background"
+            tools:context=".Alerts.View.AlertsFragment"
             >
 
 
@@ -17,8 +17,10 @@
         android:id="@+id/alert_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/alerts"
+        android:layout_marginTop="30dp"
 
+        android:text="@string/alerts"
+        android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,26 +30,28 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alertsRecycle"
-        android:layout_width="396dp"
-        android:layout_height="422dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="350dp"
+        android:layout_height="450dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alert_label" />
 
     <Button
         android:id="@+id/btnAddNewAlert"
-        android:layout_width="119dp"
-        android:layout_height="97dp"
+        android:layout_width="62dp"
+        android:layout_height="73dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="35dp"
         android:background="@drawable/baseline_add_alarm_24"
-        android:backgroundTint="@color/white"
 
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alertsRecycle"
-        app:layout_constraintVertical_bias="0.185" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

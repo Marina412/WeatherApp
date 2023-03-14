@@ -15,21 +15,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.Data.Repository
 import com.example.weatherapp.Home.ViewModel.HomeViewModel
 import com.example.weatherapp.Home.ViewModel.HomeViewModelFactory
-import com.example.weatherapp.LocalDatabase.ConcreteLocalSource
-import com.example.weatherapp.Model.MapModel
-import com.example.weatherapp.Model.Repository
-import com.example.weatherapp.Model.RoomWeatherModel
-import com.example.weatherapp.Networking.APIClient
+import com.example.weatherapp.Model.*
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.ApiStateWeather
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentHomeBinding
-import com.example.weatherapp.models.Current
-import com.example.weatherapp.models.Daily
-import com.example.weatherapp.models.Hourly
 
 private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
@@ -44,6 +38,7 @@ class HomeFragment : Fragment() {
 
     lateinit var tempUnit:String
     lateinit var windSpeedUnit:String
+    lateinit var lang:String
 
 
     var mapModel=MapModel("test","map","model",0.0,0.0)
@@ -68,11 +63,9 @@ class HomeFragment : Fragment() {
 
         tempUnit= sharedPreferences.getString("tempUnit","")!!
         windSpeedUnit= sharedPreferences.getString("windUnit","")!!
+        lang= sharedPreferences.getString("language","")!!
 
-        val localSource = ConcreteLocalSource(requireContext())
-        val remoteSource=APIClient.getInstane()
-
-        repository =  Repository.getInstance(localSource,remoteSource,sharedPreferences)
+        repository =  Repository.getInstance(requireActivity().application)
 
 
 
@@ -85,17 +78,15 @@ class HomeFragment : Fragment() {
             if(arguments!=null)
             {
                 mapModel = arguments?.getSerializable("favMapModel") as  MapModel
-                viewModel.getAllWeatherStander(mapModel.latitude,mapModel.longitude)
-
+                viewModel.getAllWeatherStander(mapModel.latitude,mapModel.longitude,sharedPreferences.getString("language","")!!)
                 binding.homeCurrentLocLabel.text=getString( R.string.favorite)
-
-                Log.i("ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp", "onCreateView: ${mapModel}")
             }
             else {
                 binding.homeCurrentLocLabel.text= getString(R.string.home)
                 viewModel.getAllWeatherStander(
-                    sharedPreferences.getString("latitude", "")!!.toDouble(),
-                    sharedPreferences.getString("longitude", "")!!.toDouble()
+                    sharedPreferences.getString("latitude", "0.0")!!.toDouble(),
+                    sharedPreferences.getString("longitude", "0.0")!!.toDouble(),
+                    sharedPreferences.getString("language","")!!
                 )
             }
 
@@ -120,13 +111,13 @@ class HomeFragment : Fragment() {
                         Log.i(TAG, "onCreateView:  ${it.data.timezone}")
 
                         successLodaingData()
-                        successDailyData(it.data.daily,it.data.timezone,tempUnit)
+                        successDailyData(it.data.daily, it.data.timezone!!,tempUnit,lang)
                         successHourlyData(it.data.hourly,it.data.timezone,tempUnit)
-                        successCurrentData(it.data.current,it.data.timezone,tempUnit)
-                        binding.locationLabel.text=UtilsFunction.getFullAddress(it.data.lat,it.data.lon,requireContext())
+                        successCurrentData(it.data.current!!,it.data.timezone,tempUnit)
+                        binding.locationLabel.text=UtilsFunction.getFullAddress(it.data.lat!!,it.data.lon!!,requireContext())
 
                         if(arguments==null) {
-                            viewModel.insertLastResponse(RoomWeatherModel(id=1,wether = it.data))
+                            viewModel.insertLastResponse(RoomWeatherModel(id=0,weather = it.data))
                         }
                     }
                     is ApiStateWeather.Failure -> {
@@ -149,9 +140,9 @@ class HomeFragment : Fragment() {
     }
 
 
-   private fun successDailyData(data:List<Daily>,timeZone:String,tempUnit:String){
+   private fun successDailyData(data:List<Daily>, timeZone:String, tempUnit:String,lang:String){
 
-        binding.recycleDay.adapter =HomeDailyAdapter(data,timeZone,tempUnit)
+        binding.recycleDay.adapter =HomeDailyAdapter(data,timeZone,tempUnit,lang)
         binding.recycleDay.layoutManager = LinearLayoutManager(requireContext())
         binding.recycleDay.apply {
 
@@ -162,7 +153,7 @@ class HomeFragment : Fragment() {
     }
 
 @RequiresApi(Build.VERSION_CODES.O)
-private    fun successCurrentData(data:Current, timeZone: String, tempUnit: String){
+    private fun successCurrentData(data: Current, timeZone: String, tempUnit: String){
         when (tempUnit){
             Constants.FAHRENHEIT  ->binding.currentTemperature.text=
                 data.temp.toString()+"°F"
@@ -200,7 +191,7 @@ private    fun successCurrentData(data:Current, timeZone: String, tempUnit: Stri
         }
     }
 
-   private fun successHourlyData(data:List<Hourly>,timezone:String,tempUnit:String){
+   private fun successHourlyData(data:List<Hourly>, timezone:String, tempUnit:String){
 
         binding.recycleHourly.adapter =HomeHourlyAdapter(data,timezone, tempUnit)
         binding.recycleHourly.layoutManager = LinearLayoutManager(requireContext())
@@ -241,36 +232,3 @@ private    fun successCurrentData(data:Current, timeZone: String, tempUnit: Stri
     }
 
 }
-
-
-
-
-/*
-
-if (UtilsFunction.isOnline(requireContext()))
-{
-
-    if(arguments!=null)
-    {
-        mapModel = arguments?.getSerializable("favMapModel") as  MapModel
-        viewModel.getAllWeatherStander(mapModel.latitude,mapModel.longitude)
-        binding.homeCurrentLocLabel.text=getString( R.string.favorite)
-
-        Log.i("ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp", "onCreateView: ${mapModel}")
-    }
-    else {
-        binding.homeCurrentLocLabel.text= getString(R.string.home)
-
-        viewModel.getAllWeatherStander(
-            sharedPreferences.getString("latitude", "")!!.toDouble(),
-            sharedPreferences.getString("longitude", "")!!.toDouble()
-        )
-    }
-
-}
-else{
-
-    Toast.makeText(requireContext(),"of line mode ")
-
-}
-*/

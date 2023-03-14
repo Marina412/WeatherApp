@@ -1,28 +1,24 @@
 package com.example.weatherapp.Fav.View
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.Context
-import android.content.SharedPreferences
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.weatherapp.Data.Repository
 import com.example.weatherapp.Fav.ViewModel.FavoriteViewModel
 import com.example.weatherapp.Fav.ViewModel.FavoriteViewModelFactory
-import com.example.weatherapp.LocalDatabase.ConcreteLocalSource
 import com.example.weatherapp.Model.MapModel
-import com.example.weatherapp.Model.Repository
-import com.example.weatherapp.Networking.APIClient
 import com.example.weatherapp.R
-import com.example.weatherapp.Utils.AlertButtonResult
 import com.example.weatherapp.Utils.Constants
-import com.example.weatherapp.Utils.UtilsFunction
+import com.example.weatherapp.Utils.CustomConfermation.AlertButtonResult
+import com.example.weatherapp.Utils.CustomConfermation.UtilsDialog
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -44,7 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fViewModelFactory: FavoriteViewModelFactory
     private lateinit var repository: Repository
 
-    private lateinit var alertButtonResult:AlertButtonResult
+    private lateinit var alertButtonResult: AlertButtonResult
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,25 +59,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val localSource = ConcreteLocalSource(requireContext())
-        val remoteSource= APIClient.getInstane()
 
-        val sharedPreferences = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-
-        repository =  Repository.getInstance(localSource,remoteSource,sharedPreferences)
-
-
-
+        repository =  Repository.getInstance(requireActivity().application)
         fViewModelFactory = FavoriteViewModelFactory(repository)
         viewModel = ViewModelProvider(this, fViewModelFactory).get(FavoriteViewModel::class.java)
 
 
-         alertButtonResult= object : AlertButtonResult {
-            override fun IfOk(favModel: MapModel) {
-                viewModel.insertToFavorite(favModel )
-            }
-
-        }
 
         geoCoder  = Geocoder(requireActivity())
         
@@ -145,9 +128,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         data.longitude
 
                     )
-                    UtilsFunction.showDialog(getString(R.string.title_save_fav_loc),
+
+                    alertButtonResult= object : AlertButtonResult {
+                        override fun IfOk() {
+                            Toast.makeText(requireContext(), "${getString(R.string.message_Location_saved)}  $fav ", Toast.LENGTH_LONG).show()
+                            viewModel.insertToFavorite(fav )
+                            findNavController().navigate(R.id.favoriteFragment)
+                        }
+
+                        override fun IfCancel() {
+                            Toast.makeText(requireContext(),getString(R.string.message_Location_canceld), Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.homeFragment)
+                        }
+                    }
+                    UtilsDialog.showDialog(getString(R.string.title_save_fav_loc),
                         getString(R.string.message_save_fav_loc),
-                        alertButtonResult,fav,requireContext())
+                        alertButtonResult,requireContext())
                 }
 
             }
@@ -183,9 +179,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         data.longitude
                     )
 //////////////////////////////////////////////////
-                    UtilsFunction.showDialog(getString(R.string.title_save_current_loc),
+                    UtilsDialog.showDialog(getString(R.string.title_save_current_loc),
                         getString(R.string.message_save_current_loc),
-                        alertButtonResult,fav,requireContext())
+                        alertButtonResult,requireContext())
                 }
 
             }

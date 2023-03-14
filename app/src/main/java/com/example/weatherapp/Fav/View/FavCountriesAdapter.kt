@@ -11,7 +11,6 @@ import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FavRowBinding
-import com.google.android.material.snackbar.Snackbar
 
 class FavCountriesAdapter (
 val favCountriesList:List<MapModel>,

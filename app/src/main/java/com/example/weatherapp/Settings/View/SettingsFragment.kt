@@ -4,17 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.SharedPreferences.Editor
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,14 +18,11 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.navigation.fragment.NavHostFragment
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.weatherapp.Fav.View.MapFragment
-import com.example.weatherapp.MainActivity
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
-import com.example.weatherapp.databinding.FragmentFavoriteBinding
 import com.example.weatherapp.databinding.FragmentSettingsBinding
 import com.google.android.gms.location.*
 import java.util.*
@@ -88,11 +81,7 @@ private var strLocation:String=""
         binding.rdBtnGroupTempratureUnit.check(sharedPreference.getInt("isTempratureUnit", R.id.rdBtnCelsius))
         binding.rdBtnGroupWindUnit.check(sharedPreference.getInt("isWindUnit",R.id.rdBtnMeterSec))
         binding.rdBtnGroupNotification.check(sharedPreference.getInt("isNotification", R.id.rdBtnNotification))
-//////////////////////////////////////////////////////////////////
 
-
-
-        ///////////////////////////////////////////////////////////////////
 
         binding.rdBtnGroupLanguage.setOnCheckedChangeListener {
                 _, checkedId ->
@@ -110,9 +99,10 @@ private var strLocation:String=""
             editor.putInt("isLanguage",binding.rdBtnGroupLanguage.checkedRadioButtonId)
             editor.putString("language", strLanguage)
             editor.apply()
+            UtilsFunction.changeLanguage(strLanguage,requireContext())
 
         }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         binding.rdBtnGroupTempratureUnit.setOnCheckedChangeListener {
                 _, checkedId ->
             val radio: RadioButton = view.findViewById(checkedId)
@@ -133,7 +123,7 @@ private var strLocation:String=""
             editor.apply()
 
         }
- ///////////////////////////////////////////////////////////////////////
+
         binding.rdBtnGroupWindUnit.setOnCheckedChangeListener {
                 _, checkedId ->
             val radio: RadioButton = view.findViewById(checkedId)
@@ -152,10 +142,8 @@ private var strLocation:String=""
 
         }
 
-/////////////////////////////////////////////////////////////////
+
         binding.rdBtnGroupNotification.setOnCheckedChangeListener {
-
-
                 _, checkedId ->
             val radio: RadioButton = view.findViewById(checkedId)
             when (radio) {
@@ -170,8 +158,6 @@ private var strLocation:String=""
             editor.putInt("isNotification",binding.rdBtnGroupNotification.checkedRadioButtonId)
             editor.putString("notification", strNotification)
             editor.apply()
-
-//////////////////////////////////////////////////////////////////////////////////
 
         }
 

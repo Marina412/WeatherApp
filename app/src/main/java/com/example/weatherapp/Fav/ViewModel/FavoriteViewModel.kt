@@ -2,14 +2,14 @@ package com.example.weatherapp.Fav.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapp.Model.*
+import com.example.weatherapp.Data.RepositoryInterface
+import com.example.weatherapp.Model.MapModel
 import com.example.weatherapp.Utils.ApiStateFav
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FavoriteViewModel(val repository: RepositoryInterface): ViewModel() {
 
@@ -37,16 +37,16 @@ class FavoriteViewModel(val repository: RepositoryInterface): ViewModel() {
 
 
 
-    fun getFromFFavorite() =
+  fun getFromFFavorite() =
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+           // withContext(Dispatchers.IO) {
                 iRepository.getAllFavoriteFromRoom().catch { e ->
                     _data.value = ApiStateFav.Failure(e)
                 }.collect { data ->
                     _data.value = ApiStateFav.Success(data)
                 }
 
-            }
+            //}
         }
 
 

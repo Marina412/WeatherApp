@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.WeatherApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -6,9 +6,9 @@
 
 
         //d2
-        <item name="colorPrimary">#4189A3</item>
+        <item name="colorPrimary">#7883BF</item>
         //upperbar
-        <item name="colorPrimaryVariant">#FFD88B</item>
+        <item name="colorPrimaryVariant">#7883BF</item>
 
 
 

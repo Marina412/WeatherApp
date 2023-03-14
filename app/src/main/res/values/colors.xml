@@ -8,8 +8,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="nav_logos">#A89893</color>
-
+    <color name="bord">#D0A19EA8</color>
+    <color name="nav_logos">#FFFFFFFF</color>
+    <!--<color name="nav_logos">#A89893</color>
+-->
     <color name="card">#EAE8EF</color>
  <!--   <color name="card">#EBC7E6</color>-->
    <!-- <color name="card">#8360c3</color>-->

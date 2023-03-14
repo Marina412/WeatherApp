@@ -1,22 +1,22 @@
 package com.example.weatherapp.Settings.View
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.weatherapp.R
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.location.Geocoder
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.Model.MapModel
-import com.example.weatherapp.Utils.AlertButtonResult
+import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Constants
-import com.example.weatherapp.Utils.UtilsFunction
+import com.example.weatherapp.Utils.CustomConfermation.AlertButtonResult
+import com.example.weatherapp.Utils.CustomConfermation.UtilsDialog
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -28,7 +28,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-
 
 
 class SettingsMapFragment: Fragment(), OnMapReadyCallback {
@@ -48,13 +47,7 @@ class SettingsMapFragment: Fragment(), OnMapReadyCallback {
         editor=sharedPreference.edit()
 
 
-        alertButtonResult= object : AlertButtonResult {
-            override fun IfOk(currentLocation: MapModel) {
-                editor.putString("latitude", currentLocation.latitude.toString())
-                editor.putString("longitude", currentLocation.longitude.toString())
-            }
 
-        }
     }
 
     override fun onCreateView(
@@ -132,9 +125,24 @@ class SettingsMapFragment: Fragment(), OnMapReadyCallback {
                         data.longitude
                     )
 
-                    UtilsFunction.showDialog(getString(R.string.title_save_current_loc),
+                    alertButtonResult= object : AlertButtonResult {
+                        override fun IfOk() {
+                            Toast.makeText(requireContext(), "${getString(R.string.message_Location_saved)}  $currentLocation ", Toast.LENGTH_LONG).show()
+
+                            editor.putString("latitude", currentLocation.latitude.toString())
+                            editor.putString("longitude", currentLocation.longitude.toString())
+                            editor.apply()
+                            findNavController().navigate(R.id.homeFragment)                        }
+
+                        override fun IfCancel() {
+                            Toast.makeText(requireContext(),getString(R.string.message_Location_canceld), Toast.LENGTH_SHORT).show()
+                            //findNavController().navigate(R.id.homeFragment)
+
+                        }
+                    }
+                    UtilsDialog .showDialog(getString(R.string.title_save_current_loc),
                         getString(R.string.message_save_current_loc),
-                        alertButtonResult,currentLocation,requireContext())
+                        alertButtonResult,requireContext())
                 }
 
             }
@@ -169,9 +177,9 @@ class SettingsMapFragment: Fragment(), OnMapReadyCallback {
                         data.longitude
                     )
 
-                    UtilsFunction.showDialog(getString(R.string.title_save_current_loc),
+                    UtilsDialog.showDialog(getString(R.string.title_save_current_loc),
                         getString(R.string.message_save_current_loc),
-                        alertButtonResult,currentLocation,requireContext())
+                        alertButtonResult,requireContext())
                 }
 
             }
