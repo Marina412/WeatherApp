@@ -97,14 +97,6 @@ class SplashActivity : AppCompatActivity() {
 
         }
 
-/*
-            val fragmentManger=supportFragmentManager
-            val fragmentTransition=fragmentManger.beginTransaction()
-            fragmentTransition.replace(R.id.nav_host_fragment,fragment)
-            fragmentTransition.commit()*//*
-
-    }
-*/
 
 
 }

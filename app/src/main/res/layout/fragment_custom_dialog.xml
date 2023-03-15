@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear"
     android:layout_width="match_parent"
@@ -10,12 +11,19 @@
     android:padding="20dp"
     tools:context=".Alerts.View.CustomAlarmDialogFragment">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:src="@drawable/sun_logo" />
+
     <TextView
         android:id="@+id/weatherNowtv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:text="Weather Now. . . . !!"
+        android:drawableLeft="@drawable/baseline_doorbell_24"
         android:textSize="18dp" />
 
     <LinearLayout

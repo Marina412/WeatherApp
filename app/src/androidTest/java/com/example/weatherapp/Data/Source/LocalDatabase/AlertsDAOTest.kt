@@ -97,7 +97,7 @@ class AlertsDAOTest {
 
         // THEN - The result  data contains the expected values
 
-        MatcherAssert.assertThat(result.get(0).lat , `is`(data1.lat))
+        assertThat(result.get(0).lat , `is`(data1.lat))
         MatcherAssert.assertThat(result.get(1).lat , `is`(data2.lat))
         MatcherAssert.assertThat(result.get(2).lat , `is`(data3.lat))
         MatcherAssert.assertThat(result.get(0).lon , `is`(data1.lon))

@@ -48,12 +48,11 @@ class AlarmWorkManger(var context: Context,var paras: WorkerParameters): Corouti
                 alertDescription=alarmResponse.alerts.get(0).description
             }
             else{
-                alertDescription=context.getString( R.string.alert_notfication_message ) + alarmResponse.current?.weather?.get(0)?.description ?: ""
+                alertDescription=context.getString( R.string.alert_notfication_message )+" " + alarmResponse.current?.weather?.get(0)?.description ?: ""
             }
-//todo nameing
             when (sharedPreference.getString("notification", Constants.NOTIFICATIONS)) {
                 (Constants.ALERTS) -> {
-                    //setAlarm(context, "Weather App", alertDescription)
+
                     GlobalScope.launch(Dispatchers.Main) {
                         CustomAlarmDialogFragment(context, alertDescription).onCreate()
                     }
@@ -80,7 +79,6 @@ class AlarmWorkManger(var context: Context,var paras: WorkerParameters): Corouti
             notificationManager.createNotificationChannel(channel)
         }
         val builder = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
-            .setSmallIcon(R.drawable.sun_logo)
             .setContentTitle(title)
             .setContentText(description)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -66,7 +66,7 @@ class SettingsMapFragment: Fragment(), OnMapReadyCallback {
         geoCoder  = Geocoder(requireActivity())
 
         Places.initialize(requireContext(), Constants.GOOGL_MAP_API_KEY)
-        //todo what is that
+
         val placesClient = Places.createClient(requireContext())
 
         val autocompleteFragment =
