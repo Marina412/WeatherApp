@@ -100,5 +100,7 @@
     <string name="alert_notfication_message">There are no alerts fo today   </string>
     <string name="welcome">Welcome</string>
     <string name="welcome_back">Welcome Back</string>
+    <string name="new_alarm">Please fill all the fileds</string>
+
 
 </resources>

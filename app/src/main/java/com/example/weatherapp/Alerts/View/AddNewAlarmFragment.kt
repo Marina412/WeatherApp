@@ -1,5 +1,6 @@
 package com.example.weatherapp.Alerts.View
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
@@ -97,6 +98,9 @@ class AddNewAlertFragment : DialogFragment() {
             popTimePiker()
         }
         binding.alertOkBtn.setOnClickListener {
+            if(
+                binding.tvAlertTime!=null ||  binding.tvAlertEndDate!=null||binding.tvAlertStartDate!=null
+            ){
             checkOverlayPermission()
             val roomAlertsModel = RoomAlertsModel(
                 lon = long,
@@ -116,7 +120,12 @@ class AddNewAlertFragment : DialogFragment() {
             setAlarmWorker()
 
             Toast.makeText(requireContext(), "Saved", Toast.LENGTH_LONG).show()
-            dismiss()
+            dismiss()}
+
+            else {
+                Toast.makeText(requireContext(), R.string.new_alarm, Toast.LENGTH_LONG)
+                    .show()
+            }
         }
         binding.alertCancelBtn.setOnClickListener {
             dismiss()
@@ -170,6 +179,7 @@ class AddNewAlertFragment : DialogFragment() {
         datePickerDialog.show()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     fun onDateEndSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         endYear = year
         endMonth = month
