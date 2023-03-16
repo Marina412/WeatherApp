@@ -33,17 +33,7 @@ class SplashActivity : AppCompatActivity() {
         editor.putBoolean("isRegistered",false)
         editor.apply()
 
-       /* val isRegistered=sharedPreference.getBoolean("isRegistered",false)
 
-        if(!isRegistered)
-        {
-            editor.putBoolean("isRegistered",true)
-            editor.apply()
-            FirstLocationDailog().show(supportFragmentManager,"FirstLocationDailog")
-            Toast.makeText(this,"Welcome", Toast.LENGTH_SHORT).show()
-
-        }
-        else {*/
 
             val coroutineScope = CoroutineScope(Dispatchers.Main + parentJob)
             coroutineScope.launch {
@@ -51,14 +41,6 @@ class SplashActivity : AppCompatActivity() {
                 startMainActivity()
             }
 
-          /*  lifecycleScope.launch(Dispatchers.Main) {
-                delay(3000)
-
-                var intent = Intent(this@SplashActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }*/
-      //  }
 
     }
 

@@ -19,12 +19,15 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FirstLocationDailogBinding
 import com.google.android.gms.location.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 
 
 class FirstLocationDailog : DialogFragment() {
@@ -35,16 +38,17 @@ class FirstLocationDailog : DialogFragment() {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
+    private val parentJob = Job()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        binding=FirstLocationDailogBinding.inflate(inflater, container, false)
+        binding = FirstLocationDailogBinding.inflate(inflater, container, false)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        sharedPreference = requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-        editor=sharedPreference.edit()
+        sharedPreference =
+            requireActivity().getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+        editor = sharedPreference.edit()
 
         return binding.root
     }
@@ -52,32 +56,28 @@ class FirstLocationDailog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rdBtnGroupLocationMode.setOnCheckedChangeListener{
-                _, checkedId ->
+        binding.rdBtnGroupLocationMode.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = view.findViewById(checkedId)
             when (radio) {
-                binding.rdBtnMap->{
-                    if(UtilsFunction.isOnline(requireContext()))
-                    {
+                binding.rdBtnMap -> {
+                    if (UtilsFunction.isOnline(requireContext())) {
                         findNavController().navigate(R.id.settingsMapFragment)
                         //findNavController().popBackStack()
-                    }
-                    else
-                    {
-                        Toast.makeText(requireContext(), R.string.offline_mode, Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(requireContext(), R.string.offline_mode, Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
 
-                binding.rdBtnGps->{
-                    if(UtilsFunction.isOnline(requireContext()))
-                    {
+                binding.rdBtnGps -> {
+                    if (UtilsFunction.isOnline(requireContext())) {
                         getLastLocation()
-                        findNavController().navigate(R.id.homeFragment)
+                       // findNavController().navigate(R.id.homeFragment)
+
                         dismiss()
-                    }
-                    else
-                    {
-                        Toast.makeText(requireContext(), R.string.offline_mode, Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(requireContext(), R.string.offline_mode, Toast.LENGTH_LONG)
+                            .show()
                     }
 
 
@@ -88,7 +88,7 @@ class FirstLocationDailog : DialogFragment() {
     }
 
 
- override fun onStart() {
+    override fun onStart() {
         super.onStart()
         dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.window?.setLayout(
@@ -97,14 +97,26 @@ class FirstLocationDailog : DialogFragment() {
         )
     }
 
-    private fun checkPermissions():Boolean{
-        return ActivityCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED
+    private fun checkPermissions(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestPermissions(){
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf<String>(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
-            Constants.PERMISSION_ID)
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf<String>(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            Constants.PERMISSION_ID
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -113,59 +125,85 @@ class FirstLocationDailog : DialogFragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == Constants.PERMISSION_ID){
-            if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if (requestCode == Constants.PERMISSION_ID) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastLocation()
             }
         }
     }
 
-    private fun isLocationEnabled():Boolean{
-        val locationManager: LocationManager =requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     @SuppressLint("MissingPermision")
-    private fun getLastLocation(){
-        if(checkPermissions()){
-            if(isLocationEnabled()){
+    private fun getLastLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
                 requestNewLocationData()
-            }
-            else{
-                Toast.makeText(requireContext(),"plz turn on location", Toast.LENGTH_SHORT).show()
-                val intent= Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            } else {
+                Toast.makeText(requireContext(), "plz turn on location", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
-        }
-        else{
+        } else {
             requestPermissions()
         }
 
     }
 
     @SuppressLint("MissingPermission")
-    private fun requestNewLocationData(){
-        val mLocationRequest= LocationRequest()
+    private fun requestNewLocationData() {
+     /*   val mLocationRequest = LocationRequest()
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
         mLocationRequest.setInterval(0)
-        mFusedLocationClient= LocationServices.getFusedLocationProviderClient(requireActivity())
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        mFusedLocationClient.requestLocationUpdates(
+            mLocationRequest,
+            mLocationCallback,
+            Looper.myLooper()
+        )*/
+        lifecycleScope.launch {
+            //loading
+//           val location = mFusedLocationClient.getCurrentLocation(
+//                CurrentLocationRequest
+//                    .Builder()
+//                    .build(), null
+//            ).await()
+            //
+
+            mFusedLocationClient.getLastLocation().addOnSuccessListener {location->
+                editor.putString("latitude",location.latitude.toString())
+                editor.putString("longitude", location.longitude.toString())
+                editor.commit()
+            }
+            //save to shared prefe
+            //navigate
+
+
+            findNavController().navigate(R.id.homeFragment)
+
+
+
+        }
 
     }
 
-    private val mLocationCallback: LocationCallback =object : LocationCallback(){
+    /*private val mLocationCallback: LocationCallback = object : LocationCallback() {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
             val mLastLocation: Location? = locationResult.getLastLocation()
-            if (mLastLocation!=null) {
+            if (mLastLocation != null) {
                 editor.putString("latitude", mLastLocation.latitude.toString())
                 editor.putString("longitude", mLastLocation.longitude.toString())
-                editor.apply()
+                editor.commit()
             }
         }
 
-    }
+    }*/
 
 
 }

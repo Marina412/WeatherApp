@@ -29,8 +29,7 @@ class MainActivity : AppCompatActivity() {
 
            sharedPreference = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
            editor=sharedPreference.edit()
-//            editor.putBoolean("isRegistered",false)
-//            editor.apply()
+
 
             val isRegistered=sharedPreference.getBoolean("isRegistered",false)
 

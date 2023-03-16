@@ -13,18 +13,28 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
         android:src="@drawable/sun_logo" />
 
     <TextView
         android:id="@+id/weatherNowtv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="Weather Now. . . . !!"
+        android:layout_height="41dp"
         android:drawableLeft="@drawable/baseline_doorbell_24"
+        android:text="Weather Now. . . . !!"
+        android:textColor="@color/white"
         android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="Cancel"
+
+        android:textSize="12dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,15 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <Button
-                android:id="@+id/cancelBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="Cancel"
-
-                android:textSize="12dp"
-                android:textStyle="bold" />
         </FrameLayout>
 
     </LinearLayout>
