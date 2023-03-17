@@ -136,7 +136,7 @@ class FirstLocationDailog : DialogFragment() {
                 permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                     // Precise location access granted.
                     requestNewLocationData()
-
+                    //////
                 }
                 permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                     // Only approximate location access granted.
