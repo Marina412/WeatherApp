@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear"
     android:layout_width="match_parent"
+
+
     android:layout_height="170dp"
     android:layout_margin="16dp"
- android:background="@drawable/background"
+    android:background="@color/nav_logos"
+    android:backgroundTint="@color/card"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".Alerts.View.CustomAlarmDialogFragment">
@@ -20,36 +23,21 @@
     <TextView
         android:id="@+id/weatherNowtv"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:drawableLeft="@drawable/baseline_doorbell_24"
         android:text="Weather Now. . . . !!"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="18dp" />
 
     <Button
         android:id="@+id/cancelBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/black"
         android:text="Cancel"
-
         android:textSize="12dp"
         android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-        </FrameLayout>
-
-    </LinearLayout>
 
 
 </LinearLayout>

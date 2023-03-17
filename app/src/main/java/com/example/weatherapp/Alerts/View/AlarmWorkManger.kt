@@ -14,11 +14,13 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.weatherapp.Data.Repository
+import com.example.weatherapp.Model.RoomAlertsModel
 import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -81,6 +83,7 @@ class AlarmWorkManger(var context: Context,var paras: WorkerParameters): Corouti
         val builder = NotificationCompat.Builder(context, Constants.CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(description)
+            .setSmallIcon(R.drawable.sun_logo)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
@@ -94,4 +97,6 @@ class AlarmWorkManger(var context: Context,var paras: WorkerParameters): Corouti
         }
 
     }
+
+
 }

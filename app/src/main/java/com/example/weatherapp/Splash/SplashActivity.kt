@@ -28,16 +28,9 @@ class SplashActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-       sharedPreference = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-        editor=sharedPreference.edit()
-        editor.putBoolean("isRegistered",false)
-        editor.apply()
-
-
-
             val coroutineScope = CoroutineScope(Dispatchers.Main + parentJob)
             coroutineScope.launch {
-                delay(4000)
+                delay(3000)
                 startMainActivity()
             }
 
@@ -65,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
     fun navgation(isRegistered:Boolean){
         if (isRegistered==false){
             editor.putBoolean("isRegistered",true)
-            editor.apply()
+            editor.commit()
            FirstLocationDailog().show(supportFragmentManager,"FirstLocationDailog")
             Toast.makeText(this,"Welcome", Toast.LENGTH_SHORT).show()
 

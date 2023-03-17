@@ -1,6 +1,5 @@
 package com.example.weatherapp.Alerts.View
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
@@ -98,34 +97,38 @@ class AddNewAlertFragment : DialogFragment() {
             popTimePiker()
         }
         binding.alertOkBtn.setOnClickListener {
-            if(
-                binding.tvAlertTime!=null ||  binding.tvAlertEndDate!=null||binding.tvAlertStartDate!=null
-            ){
-            checkOverlayPermission()
-            val roomAlertsModel = RoomAlertsModel(
-                lon = long,
-                lat = lat,
-                //startDate =startDate,
-                endDate = endDate,
-                time = alartTime,
-                hour = hour,
-                minute = minutes,
-                startDay = startDay,
-                startMonth = startMonth,
-                startYear = startYear,
-                //started = true
-            )
-            viewModel.insertToAlerts(roomAlertsModel)
-            //schedule(requireContext(),roomAlertsModel)
-            setAlarmWorker()
+            if(binding.tvAlertTime.text.isNotEmpty() ||binding.tvAlertStartDate.text.isNotEmpty()||binding.tvAlertEndDate.text.isNotEmpty())
+            {
+                checkOverlayPermission()
+                val roomAlertsModel = RoomAlertsModel(
+                    lon = long,
+                    lat = lat,
+                    //startDate =startDate,
+                    endDate = endDate,
+                    time = alartTime,
+                    hour = hour,
+                    minute = minutes,
+                    startDay = startDay,
+                    startMonth = startMonth,
+                    startYear = startYear,
+                    //started = true
+                )
+                if(checkTime(roomAlertsModel)){
+                    setAlarmWorker()
+                    viewModel.insertToAlerts(roomAlertsModel)
+                    Toast.makeText(requireContext(), "Saved", Toast.LENGTH_LONG).show()
+                }
+                else{
 
-            Toast.makeText(requireContext(), "Saved", Toast.LENGTH_LONG).show()
-            dismiss()}
+                    viewModel.deleteFromAlerts(roomAlertsModel)
+                }
 
-            else {
-                Toast.makeText(requireContext(), R.string.new_alarm, Toast.LENGTH_LONG)
-                    .show()
-            }
+
+
+
+                dismiss()
+           }
+
         }
         binding.alertCancelBtn.setOnClickListener {
             dismiss()
@@ -179,13 +182,12 @@ class AddNewAlertFragment : DialogFragment() {
         datePickerDialog.show()
     }
 
-    @SuppressLint("SuspiciousIndentation")
     fun onDateEndSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         endYear = year
         endMonth = month
         endDay = dayOfMonth
         val endTimeCalender:Calendar=Calendar.getInstance()
-            endTimeCalender.set(year,month,dayOfMonth)
+        endTimeCalender.set(year,month,dayOfMonth)
         endDateWorker=endTimeCalender.timeInMillis
         endDate = "" + dayOfMonth + '/' + (month + 1) + '/' + year
         binding.tvAlertEndDate.text = endDate
@@ -217,17 +219,6 @@ class AddNewAlertFragment : DialogFragment() {
         timePickerDialog.show()
     }
 
-/*
-
-    private fun setAlarmWorker() {
-        val worker = PeriodicWorkRequestBuilder<AlarmWorkManger>(
-            1,
-            TimeUnit.DAYS
-        ).setInitialDelay(5, TimeUnit.SECONDS)
-            .build()
-        WorkManager.getInstance(requireContext()).enqueue(worker)
-    }
-*/
 
 
     private fun setAlarmWorker() {
@@ -245,6 +236,23 @@ class AddNewAlertFragment : DialogFragment() {
             .build()
         WorkManager.getInstance(requireContext()).enqueue(worker)
 
+    }
+
+
+    private fun checkTime(alert: RoomAlertsModel): Boolean {
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val month = Calendar.getInstance().get(Calendar.MONTH)
+        val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        val dayNow = getDateMillis("$day/${month + 1}/$year")
+        val starDateAlertsModel=getDateMillis("${alert.startDay}/${alert.startMonth}/${alert.startYear}")
+        return dayNow >= starDateAlertsModel && dayNow <= endDateWorker
+    }
+
+
+    private fun getDateMillis(date: String): Long {
+        val f = SimpleDateFormat("dd/MM/yyyy")
+        val d: Date = f.parse(date)
+        return d.time
     }
 
 

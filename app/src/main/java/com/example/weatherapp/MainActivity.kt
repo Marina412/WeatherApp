@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
            editor=sharedPreference.edit()
 
 
-            val isRegistered=sharedPreference.getBoolean("isRegistered",false)
+            val isRegistered=sharedPreference.getBoolean("isRegistered",true)
 
 
             val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
@@ -42,13 +42,14 @@ class MainActivity : AppCompatActivity() {
 
        }
             navController?.navigate(R.id.blankFragment)
-            if (isRegistered == false) {
+            if (!isRegistered == false) {
                 editor.putBoolean("isRegistered", true)
                 editor.apply()
                 navController?.navigate(R.id.firstLocationDailog)
                 Toast.makeText(this, getString(R.string.welcome), Toast.LENGTH_SHORT).show()
 
-            } else {
+            }
+            else {
                     if(UtilsFunction.isOnline(this)){
                         Toast.makeText(this, getString(R.string.welcome_back), Toast.LENGTH_SHORT).show()
                     }

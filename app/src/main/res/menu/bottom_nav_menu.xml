@@ -4,11 +4,7 @@
         android:icon="@drawable/baseline_home_24"
         android:title="@string/home"
         android:titleCondensed="@string/home" />
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="@string/settings"
-        android:titleCondensed="@string/settings" />
+
     <item
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/baseline_favorite_24"
@@ -19,5 +15,10 @@
         android:icon="@drawable/baseline_alarm_24"
         android:title="@string/alerts"
         android:titleCondensed="@string/alerts" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/settings"
+        android:titleCondensed="@string/settings" />
 </menu>
 

@@ -32,43 +32,4 @@ data class RoomAlertsModel(
     var startMonth: Int,
     @ColumnInfo(name = "year")
     var startYear: Int
-
-
-){
-    @Ignore
-    var started: Boolean=false
-}
-
-/*
-@PrimaryKey(autoGenerate = true)
-@ColumnInfo(name = "id")
-var id:Int? = null,
-
-@ColumnInfo(name = "long")
-var lon:Double,
-
-@ColumnInfo(name = "lat")
-var lat:Double,
-
-@ColumnInfo(name = "sdate")
-var startDate:Int,
-
-@ColumnInfo(name = "edate")
-var endDate:Int,
-
-@ColumnInfo(name = "time")
-var time:String,
-@ColumnInfo(name = "houre")
-var hour:Int,
-@ColumnInfo(name = "minute")
-var minute: Int,
-
-@ColumnInfo(name = "month")
-var month: Int,
-@ColumnInfo(name = "year")
-var year: Int ,
-
-@ColumnInfo(name = "started")
-var started: Boolean ,
-@ColumnInfo(name = "created")
-val created: Long*/
+)

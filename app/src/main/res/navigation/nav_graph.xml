@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_firstLocationDailog_to_blankFragment"
             app:destination="@id/blankFragment" />
+        <action
+            android:id="@+id/action_firstLocationDailog_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </dialog>
     <dialog
         android:id="@+id/addNewAlertFragment"

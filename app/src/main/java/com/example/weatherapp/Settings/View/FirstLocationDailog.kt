@@ -1,6 +1,8 @@
 package com.example.weatherapp.Settings.View
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,11 +13,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
@@ -38,6 +43,8 @@ class FirstLocationDailog : DialogFragment() {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
+
+    lateinit var locationPermissionRequest :ActivityResultLauncher<Array<String>>
     private val parentJob = Job()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,7 +108,7 @@ class FirstLocationDailog : DialogFragment() {
         return ActivityCompat.checkSelfPermission(
             requireContext(),
             android.Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED &&
+        ) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(
                     requireContext(),
                     android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -109,28 +116,54 @@ class FirstLocationDailog : DialogFragment() {
     }
 
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf<String>(
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            Constants.PERMISSION_ID
+
+
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         )
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Constants.PERMISSION_ID) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+         locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                    requestNewLocationData()
+
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    // Only approximate location access granted.
+                    requestNewLocationData()
+
+                }
+                else -> {
+                    // No location access granted.
+                }
             }
         }
     }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+        ) {
+
+            if (requestCode == Constants.PERMISSION_ID) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLastLocation()
+                }
+
+            }
+        }
+
 
     private fun isLocationEnabled(): Boolean {
         val locationManager: LocationManager =
@@ -156,36 +189,21 @@ class FirstLocationDailog : DialogFragment() {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-     /*   val mLocationRequest = LocationRequest()
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-        mLocationRequest.setInterval(0)
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        mFusedLocationClient.requestLocationUpdates(
-            mLocationRequest,
-            mLocationCallback,
-            Looper.myLooper()
-        )*/
-        lifecycleScope.launch {
-            //loading
-//           val location = mFusedLocationClient.getCurrentLocation(
-//                CurrentLocationRequest
-//                    .Builder()
-//                    .build(), null
-//            ).await()
-            //
 
-            mFusedLocationClient.getLastLocation().addOnSuccessListener {location->
-                editor.putString("latitude",location.latitude.toString())
-                editor.putString("longitude", location.longitude.toString())
-                editor.commit()
-            }
-            //save to shared prefe
-            //navigate
+        val location = mFusedLocationClient.getCurrentLocation(
+            CurrentLocationRequest
+                .Builder()
+                .build(), null
+        ).addOnSuccessListener {
+                location->
+
+            editor.putString("latitude",location.latitude.toString())
+            editor.putString("longitude", location.longitude.toString())
+            editor.commit()
+            Log.i("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "requestNewLocationData: ${location.latitude}   ${location.longitude}")
 
 
-            findNavController().navigate(R.id.homeFragment)
-
-
+                findNavController().navigate(R.id.action_firstLocationDailog_to_homeFragment)
 
         }
 
