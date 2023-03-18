@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.Alerts.ViewModel.AlertsViewModel
@@ -19,6 +20,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.Utils.ApiStateAlerts
 import com.example.weatherapp.Utils.CustomConfermation.AlertButtonResult
 import com.example.weatherapp.Utils.CustomConfermation.UtilsDialog
+import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentAlertsBinding
 
 
@@ -82,7 +84,22 @@ lateinit var binding: FragmentAlertsBinding
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnAddNewAlert.setOnClickListener {
-            AddNewAlertFragment().show(requireActivity().supportFragmentManager,"AlertDialogFragment")
+
+
+            if(UtilsFunction.isOnline(requireContext()))
+            {
+                AddNewAlertFragment().show(requireActivity().supportFragmentManager,"AlertDialogFragment")
+            }
+
+            else
+            {
+                Toast.makeText(requireContext(),R.string.offline_mode,Toast.LENGTH_LONG).show()
+            }
+
+
+
+
+
         }
     }
 
@@ -123,3 +140,4 @@ lateinit var binding: FragmentAlertsBinding
 
 
 }
+

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
            editor=sharedPreference.edit()
 
 
-            val isRegistered=sharedPreference.getBoolean("isRegistered",true)
+            val isRegistered=sharedPreference.getBoolean("isRegistered",false)
 
 
             val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
        }
             navController?.navigate(R.id.blankFragment)
-            if (!isRegistered == false) {
+            if (isRegistered == false) {
                 editor.putBoolean("isRegistered", true)
                 editor.apply()
                 navController?.navigate(R.id.firstLocationDailog)

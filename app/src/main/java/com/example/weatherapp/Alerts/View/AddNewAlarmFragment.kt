@@ -28,6 +28,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.Utils.Constants
 import com.example.weatherapp.Utils.CustomConfermation.AlertButtonResult
 import com.example.weatherapp.Utils.CustomConfermation.UtilsDialog
+import com.example.weatherapp.Utils.UtilsFunction
 import com.example.weatherapp.databinding.FragmentAddNewAlertBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -222,19 +223,30 @@ class AddNewAlertFragment : DialogFragment() {
 
 
     private fun setAlarmWorker() {
-        val date = Calendar.getInstance().timeInMillis.div(1000)
-        val inQueue = ((date - time) / 60 / 60 / 60 / 60) - 115
-        val data = Data.Builder()
-        data.putLong("endDate", endDateWorker)
-        val worker = PeriodicWorkRequestBuilder<AlarmWorkManger>(
-            1,
-            TimeUnit.DAYS
-        )
-            .setInitialDelay(inQueue, TimeUnit.SECONDS)
-            .addTag("$inQueue")
-            .setInputData(data.build())
-            .build()
-        WorkManager.getInstance(requireContext()).enqueue(worker)
+        if(UtilsFunction.isOnline(requireContext())){
+
+            val date = Calendar.getInstance().timeInMillis.div(1000)
+            val inQueue = ((date - time) / 60 / 60 / 60 / 60) - 115
+            val data = Data.Builder()
+            data.putLong("endDate", endDateWorker)
+            val worker = PeriodicWorkRequestBuilder<AlarmWorkManger>(
+                1,
+                TimeUnit.DAYS
+            )
+                .setInitialDelay(inQueue, TimeUnit.SECONDS)
+                .addTag("$inQueue")
+                .setInputData(data.build())
+                .build()
+            WorkManager.getInstance(requireContext()).enqueue(worker)
+
+        }
+        else
+        {
+            Toast.makeText(requireContext(),R.string.offline_mode,Toast.LENGTH_LONG).show()
+        }
+
+
+
 
     }
 
